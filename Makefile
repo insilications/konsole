@@ -1,5 +1,5 @@
 PKG_NAME := konsole
-URL = 
+URL = https://github.com/KDE/konsole/archive/v18.07.80.tar.gz
 ARCHIVES = 
 
 include ../common/Makefile.common
