@@ -1,5 +1,5 @@
 libkdeinit5_konsole.so:kdemain
-libkonsoleprivate.so.18:_Z15konsole_wcwidthj
+libkonsoleprivate.so.18:_Z15konsole_wcwidtht
 libkonsoleprivate.so.18:_ZN7Konsole11HTMLDecoder10decodeLineEPKNS_9CharacterEih
 libkonsoleprivate.so.18:_ZN7Konsole11HTMLDecoder13setColorTableEPK6QColor
 libkonsoleprivate.so.18:_ZN7Konsole11HTMLDecoder3endEv
@@ -779,7 +779,7 @@ libkonsoleprivate.so.18:_ZN7Konsole7SessionD2Ev
 libkonsoleprivate.so.18:_ZN7Konsole9Emulation10setHistoryERKNS_11HistoryTypeE
 libkonsoleprivate.so.18:_ZN7Konsole9Emulation11qt_metacallEN11QMetaObject4CallEiPPv
 libkonsoleprivate.so.18:_ZN7Konsole9Emulation11qt_metacastEPKc
-libkonsoleprivate.so.18:_ZN7Konsole9Emulation11receiveCharEj
+libkonsoleprivate.so.18:_ZN7Konsole9Emulation11receiveCharEi
 libkonsoleprivate.so.18:_ZN7Konsole9Emulation11receiveDataEPKci
 libkonsoleprivate.so.18:_ZN7Konsole9Emulation12clearHistoryEv
 libkonsoleprivate.so.18:_ZN7Konsole9Emulation12createWindowEv
