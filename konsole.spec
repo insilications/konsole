@@ -4,7 +4,7 @@
 #
 Name     : konsole
 Version  : 18.08.0
-Release  : 4
+Release  : 5
 URL      : https://github.com/KDE/konsole/archive/v18.08.0.tar.gz
 Source0  : https://github.com/KDE/konsole/archive/v18.08.0.tar.gz
 Summary  : No detailed summary available
@@ -114,7 +114,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1534721732
+export SOURCE_DATE_EPOCH=1535431684
 mkdir clr-build
 pushd clr-build
 %cmake ..
@@ -122,7 +122,7 @@ make  %{?_smp_mflags}
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1534721732
+export SOURCE_DATE_EPOCH=1535431684
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/doc/konsole
 cp COPYING %{buildroot}/usr/share/doc/konsole/COPYING
@@ -166,6 +166,7 @@ popd
 /usr/share/kservices5/konsolepart.desktop
 /usr/share/kservicetypes5/terminalemulator.desktop
 /usr/share/metainfo/org.kde.konsole.appdata.xml
+/usr/share/xdg/konsole.knsrc
 
 %files dev
 %defattr(-,root,root,-)
