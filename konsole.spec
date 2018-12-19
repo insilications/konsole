@@ -4,7 +4,7 @@
 #
 Name     : konsole
 Version  : 18.12.0
-Release  : 11
+Release  : 12
 URL      : https://github.com/KDE/konsole/archive/v18.12.0.tar.gz
 Source0  : https://github.com/KDE/konsole/archive/v18.12.0.tar.gz
 Summary  : No detailed summary available
