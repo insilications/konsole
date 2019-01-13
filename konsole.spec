@@ -4,7 +4,7 @@
 #
 Name     : konsole
 Version  : 18.12.1
-Release  : 13
+Release  : 14
 URL      : https://github.com/KDE/konsole/archive/v18.12.1.tar.gz
 Source0  : https://github.com/KDE/konsole/archive/v18.12.1.tar.gz
 Summary  : KDE's terminal emulator
@@ -14,13 +14,36 @@ Requires: konsole-bin = %{version}-%{release}
 Requires: konsole-data = %{version}-%{release}
 Requires: konsole-lib = %{version}-%{release}
 Requires: konsole-license = %{version}-%{release}
+BuildRequires : attica-dev
 BuildRequires : buildreq-cmake
 BuildRequires : buildreq-kde
 BuildRequires : buildreq-qmake
+BuildRequires : kbookmarks-dev
+BuildRequires : kcodecs-dev
+BuildRequires : kcompletion-dev
+BuildRequires : kconfigwidgets-dev
+BuildRequires : kcrash-dev
+BuildRequires : kdbusaddons-dev
 BuildRequires : kglobalaccel-dev
+BuildRequires : kguiaddons-dev
+BuildRequires : kiconthemes-dev
+BuildRequires : kinit-dev
+BuildRequires : kio-dev
+BuildRequires : kitemviews-dev
+BuildRequires : kjobwidgets-dev
+BuildRequires : knewstuff-dev
+BuildRequires : knotifications-dev
 BuildRequires : knotifyconfig-dev
+BuildRequires : kparts-dev
+BuildRequires : kpty-dev
+BuildRequires : ktextwidgets-dev
+BuildRequires : kwidgetsaddons-dev
+BuildRequires : kwindowsystem-dev
+BuildRequires : kxmlgui-dev
 BuildRequires : libX11-dev libICE-dev libSM-dev libXau-dev libXcomposite-dev libXcursor-dev libXdamage-dev libXdmcp-dev libXext-dev libXfixes-dev libXft-dev libXi-dev libXinerama-dev libXi-dev libXmu-dev libXpm-dev libXrandr-dev libXrender-dev libXres-dev libXScrnSaver-dev libXt-dev libXtst-dev libXv-dev libXxf86misc-dev libXxf86vm-dev
 BuildRequires : qtbase-dev mesa-dev
+BuildRequires : solid-dev
+BuildRequires : sonnet-dev
 
 %description
 > Konsole is a *great* program, but is designed for the end user to have a
@@ -51,18 +74,6 @@ Group: Data
 
 %description data
 data components for the konsole package.
-
-
-%package dev
-Summary: dev components for the konsole package.
-Group: Development
-Requires: konsole-lib = %{version}-%{release}
-Requires: konsole-bin = %{version}-%{release}
-Requires: konsole-data = %{version}-%{release}
-Provides: konsole-devel = %{version}-%{release}
-
-%description dev
-dev components for the konsole package.
 
 
 %package doc
@@ -99,7 +110,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1547132396
+export SOURCE_DATE_EPOCH=1547423176
 mkdir -p clr-build
 pushd clr-build
 %cmake ..
@@ -107,7 +118,7 @@ make  %{?_smp_mflags}
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1547132396
+export SOURCE_DATE_EPOCH=1547423176
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/konsole
 cp COPYING %{buildroot}/usr/share/package-licenses/konsole/COPYING
@@ -153,10 +164,6 @@ popd
 /usr/share/xdg/konsole.categories
 /usr/share/xdg/konsole.knsrc
 
-%files dev
-%defattr(-,root,root,-)
-/usr/lib64/libkdeinit5_konsole.so
-
 %files doc
 %defattr(0644,root,root,0755)
 /usr/share/doc/HTML/en/konsole/draganddrop-contextmenu.png
@@ -165,6 +172,7 @@ popd
 
 %files lib
 %defattr(-,root,root,-)
+/usr/lib64/libkdeinit5_konsole.so
 /usr/lib64/libkonsoleprivate.so.18
 /usr/lib64/libkonsoleprivate.so.18.12.1
 /usr/lib64/qt5/plugins/konsolepart.so
