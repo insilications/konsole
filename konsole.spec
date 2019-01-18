@@ -4,7 +4,7 @@
 #
 Name     : konsole
 Version  : 18.12.1
-Release  : 14
+Release  : 15
 URL      : https://github.com/KDE/konsole/archive/v18.12.1.tar.gz
 Source0  : https://github.com/KDE/konsole/archive/v18.12.1.tar.gz
 Summary  : KDE's terminal emulator
