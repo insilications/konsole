@@ -5,11 +5,11 @@
 # Source0 file verified with key 0xDBD2CE893E2D1C87 (cfeck@kde.org)
 #
 Name     : konsole
-Version  : 18.12.2
-Release  : 18
-URL      : https://download.kde.org/stable/applications/18.12.2/src/konsole-18.12.2.tar.xz
-Source0  : https://download.kde.org/stable/applications/18.12.2/src/konsole-18.12.2.tar.xz
-Source99 : https://download.kde.org/stable/applications/18.12.2/src/konsole-18.12.2.tar.xz.sig
+Version  : 18.12.3
+Release  : 19
+URL      : https://download.kde.org/stable/applications/18.12.3/src/konsole-18.12.3.tar.xz
+Source0  : https://download.kde.org/stable/applications/18.12.3/src/konsole-18.12.3.tar.xz
+Source99 : https://download.kde.org/stable/applications/18.12.3/src/konsole-18.12.3.tar.xz.sig
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : GFDL-1.2 GPL-2.0 LGPL-2.0
@@ -18,49 +18,18 @@ Requires: konsole-data = %{version}-%{release}
 Requires: konsole-lib = %{version}-%{release}
 Requires: konsole-license = %{version}-%{release}
 Requires: konsole-locales = %{version}-%{release}
-BuildRequires : attica-dev
 BuildRequires : buildreq-cmake
 BuildRequires : buildreq-kde
 BuildRequires : buildreq-qmake
-BuildRequires : kbookmarks-dev
-BuildRequires : kcodecs-dev
-BuildRequires : kcompletion-dev
-BuildRequires : kconfigwidgets-dev
-BuildRequires : kcrash-dev
-BuildRequires : kdbusaddons-dev
 BuildRequires : kglobalaccel-dev
-BuildRequires : kguiaddons-dev
-BuildRequires : kiconthemes-dev
-BuildRequires : kinit-dev
-BuildRequires : kio-dev
-BuildRequires : kitemviews-dev
-BuildRequires : kjobwidgets-dev
-BuildRequires : knewstuff-dev
-BuildRequires : knotifications-dev
 BuildRequires : knotifyconfig-dev
-BuildRequires : kparts-dev
-BuildRequires : kpty-dev
-BuildRequires : ktextwidgets-dev
-BuildRequires : kwidgetsaddons-dev
-BuildRequires : kwindowsystem-dev
-BuildRequires : kxmlgui-dev
 BuildRequires : libX11-dev libICE-dev libSM-dev libXau-dev libXcomposite-dev libXcursor-dev libXdamage-dev libXdmcp-dev libXext-dev libXfixes-dev libXft-dev libXi-dev libXinerama-dev libXi-dev libXmu-dev libXpm-dev libXrandr-dev libXrender-dev libXres-dev libXScrnSaver-dev libXt-dev libXtst-dev libXv-dev libXxf86misc-dev libXxf86vm-dev
 BuildRequires : qtbase-dev mesa-dev
-BuildRequires : solid-dev
-BuildRequires : sonnet-dev
 
 %description
-> Konsole is a *great* program, but is designed for the end user to have a
-> lot of control over their session--which in our environment would be
-> very bad.  The users have no clue what emulation to pick, how many
-> columns and rows they need.
-> What would really help is some command line arguments that would take
-> configure certain items, and then disable them from the pulldowns along
-> the top.
-> For instance, if the command --noscrollbar was issued, it would turn off
-> the scroll bar and then now allow them to turn it back on again via the
-> pulldowns.
-> The more things that I could configure via the command line, the better.
+Konsole - KDE's Terminal Emulator
+==================================
+Konsole is a terminal program for KDE.
 
 %package bin
 Summary: bin components for the konsole package.
@@ -115,22 +84,23 @@ locales components for the konsole package.
 
 
 %prep
-%setup -q -n konsole-18.12.2
+%setup -q -n konsole-18.12.3
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1549889512
+export SOURCE_DATE_EPOCH=1552005015
 mkdir -p clr-build
 pushd clr-build
+export LDFLAGS="${LDFLAGS} -fno-lto"
 %cmake ..
-make  %{?_smp_mflags}
+make  %{?_smp_mflags} VERBOSE=1
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1549889512
+export SOURCE_DATE_EPOCH=1552005015
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/konsole
 cp COPYING %{buildroot}/usr/share/package-licenses/konsole/COPYING
@@ -208,7 +178,7 @@ popd
 %defattr(-,root,root,-)
 /usr/lib64/libkdeinit5_konsole.so
 /usr/lib64/libkonsoleprivate.so.18
-/usr/lib64/libkonsoleprivate.so.18.12.2
+/usr/lib64/libkonsoleprivate.so.18.12.3
 /usr/lib64/qt5/plugins/konsolepart.so
 
 %files license
