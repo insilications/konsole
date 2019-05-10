@@ -5,11 +5,11 @@
 # Source0 file verified with key 0xDBD2CE893E2D1C87 (cfeck@kde.org)
 #
 Name     : konsole
-Version  : 19.04.0
-Release  : 21
-URL      : https://download.kde.org/stable/applications/19.04.0/src/konsole-19.04.0.tar.xz
-Source0  : https://download.kde.org/stable/applications/19.04.0/src/konsole-19.04.0.tar.xz
-Source99 : https://download.kde.org/stable/applications/19.04.0/src/konsole-19.04.0.tar.xz.sig
+Version  : 19.04.1
+Release  : 22
+URL      : https://download.kde.org/stable/applications/19.04.1/src/konsole-19.04.1.tar.xz
+Source0  : https://download.kde.org/stable/applications/19.04.1/src/konsole-19.04.1.tar.xz
+Source99 : https://download.kde.org/stable/applications/19.04.1/src/konsole-19.04.1.tar.xz.sig
 Summary  : KDE's terminal emulator
 Group    : Development/Tools
 License  : GFDL-1.2 GPL-2.0 LGPL-2.0
@@ -18,36 +18,13 @@ Requires: konsole-data = %{version}-%{release}
 Requires: konsole-lib = %{version}-%{release}
 Requires: konsole-license = %{version}-%{release}
 Requires: konsole-locales = %{version}-%{release}
-BuildRequires : attica-dev
 BuildRequires : buildreq-cmake
 BuildRequires : buildreq-kde
 BuildRequires : buildreq-qmake
-BuildRequires : kbookmarks-dev
-BuildRequires : kcodecs-dev
-BuildRequires : kcompletion-dev
-BuildRequires : kconfigwidgets-dev
-BuildRequires : kcrash-dev
-BuildRequires : kdbusaddons-dev
 BuildRequires : kglobalaccel-dev
-BuildRequires : kguiaddons-dev
-BuildRequires : kiconthemes-dev
-BuildRequires : kinit-dev
-BuildRequires : kio-dev
-BuildRequires : kitemviews-dev
-BuildRequires : kjobwidgets-dev
-BuildRequires : knewstuff-dev
-BuildRequires : knotifications-dev
 BuildRequires : knotifyconfig-dev
-BuildRequires : kparts-dev
-BuildRequires : kpty-dev
-BuildRequires : ktextwidgets-dev
-BuildRequires : kwidgetsaddons-dev
-BuildRequires : kwindowsystem-dev
-BuildRequires : kxmlgui-dev
 BuildRequires : libX11-dev libICE-dev libSM-dev libXau-dev libXcomposite-dev libXcursor-dev libXdamage-dev libXdmcp-dev libXext-dev libXfixes-dev libXft-dev libXi-dev libXinerama-dev libXi-dev libXmu-dev libXpm-dev libXrandr-dev libXrender-dev libXres-dev libXScrnSaver-dev libXt-dev libXtst-dev libXv-dev libXxf86misc-dev libXxf86vm-dev
 BuildRequires : qtbase-dev mesa-dev
-BuildRequires : solid-dev
-BuildRequires : sonnet-dev
 
 %description
 > Konsole is a *great* program, but is designed for the end user to have a
@@ -115,14 +92,14 @@ locales components for the konsole package.
 
 
 %prep
-%setup -q -n konsole-19.04.0
+%setup -q -n konsole-19.04.1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1557027148
+export SOURCE_DATE_EPOCH=1557451619
 mkdir -p clr-build
 pushd clr-build
 export AR=gcc-ar
@@ -137,7 +114,7 @@ make  %{?_smp_mflags}
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1557027148
+export SOURCE_DATE_EPOCH=1557451619
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/konsole
 cp COPYING %{buildroot}/usr/share/package-licenses/konsole/COPYING
@@ -215,7 +192,7 @@ popd
 %defattr(-,root,root,-)
 /usr/lib64/libkdeinit5_konsole.so
 /usr/lib64/libkonsoleprivate.so.19
-/usr/lib64/libkonsoleprivate.so.19.04.0
+/usr/lib64/libkonsoleprivate.so.19.04.1
 /usr/lib64/qt5/plugins/konsolepart.so
 
 %files license
