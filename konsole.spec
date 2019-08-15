@@ -5,11 +5,11 @@
 # Source0 file verified with key 0xDBD2CE893E2D1C87 (cfeck@kde.org)
 #
 Name     : konsole
-Version  : 19.04.3
-Release  : 24
-URL      : https://download.kde.org/stable/applications/19.04.3/src/konsole-19.04.3.tar.xz
-Source0  : https://download.kde.org/stable/applications/19.04.3/src/konsole-19.04.3.tar.xz
-Source99 : https://download.kde.org/stable/applications/19.04.3/src/konsole-19.04.3.tar.xz.sig
+Version  : 19.08.0
+Release  : 25
+URL      : https://download.kde.org/stable/applications/19.08.0/src/konsole-19.08.0.tar.xz
+Source0  : https://download.kde.org/stable/applications/19.08.0/src/konsole-19.08.0.tar.xz
+Source1 : https://download.kde.org/stable/applications/19.08.0/src/konsole-19.08.0.tar.xz.sig
 Summary  : KDE's terminal emulator
 Group    : Development/Tools
 License  : GFDL-1.2 GPL-2.0 LGPL-2.0
@@ -92,16 +92,17 @@ locales components for the konsole package.
 
 
 %prep
-%setup -q -n konsole-19.04.3
+%setup -q -n konsole-19.08.0
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1562878580
+export SOURCE_DATE_EPOCH=1565906369
 mkdir -p clr-build
 pushd clr-build
+# -Werror is for werrorists
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -115,7 +116,7 @@ make  %{?_smp_mflags} VERBOSE=1
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1562878580
+export SOURCE_DATE_EPOCH=1565906369
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/konsole
 cp COPYING %{buildroot}/usr/share/package-licenses/konsole/COPYING
@@ -139,6 +140,7 @@ popd
 /usr/share/applications/org.kde.konsole.desktop
 /usr/share/khotkeys/konsole.khotkeys
 /usr/share/knotifications5/konsole.notifyrc
+/usr/share/knsrcfiles/konsole.knsrc
 /usr/share/konsole/BlackOnLightYellow.colorscheme
 /usr/share/konsole/BlackOnRandomLight.colorscheme
 /usr/share/konsole/BlackOnWhite.colorscheme
@@ -159,8 +161,7 @@ popd
 /usr/share/kservices5/konsolepart.desktop
 /usr/share/kservicetypes5/terminalemulator.desktop
 /usr/share/metainfo/org.kde.konsole.appdata.xml
-/usr/share/xdg/konsole.categories
-/usr/share/xdg/konsole.knsrc
+/usr/share/qlogging-categories5/konsole.categories
 
 %files doc
 %defattr(0644,root,root,0755)
@@ -193,7 +194,7 @@ popd
 %defattr(-,root,root,-)
 /usr/lib64/libkdeinit5_konsole.so
 /usr/lib64/libkonsoleprivate.so.19
-/usr/lib64/libkonsoleprivate.so.19.04.3
+/usr/lib64/libkonsoleprivate.so.19.08.0
 /usr/lib64/qt5/plugins/konsolepart.so
 
 %files license
