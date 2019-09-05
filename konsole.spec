@@ -5,11 +5,11 @@
 # Source0 file verified with key 0xDBD2CE893E2D1C87 (cfeck@kde.org)
 #
 Name     : konsole
-Version  : 19.08.0
-Release  : 25
-URL      : https://download.kde.org/stable/applications/19.08.0/src/konsole-19.08.0.tar.xz
-Source0  : https://download.kde.org/stable/applications/19.08.0/src/konsole-19.08.0.tar.xz
-Source1 : https://download.kde.org/stable/applications/19.08.0/src/konsole-19.08.0.tar.xz.sig
+Version  : 19.08.1
+Release  : 26
+URL      : https://download.kde.org/stable/applications/19.08.1/src/konsole-19.08.1.tar.xz
+Source0  : https://download.kde.org/stable/applications/19.08.1/src/konsole-19.08.1.tar.xz
+Source1 : https://download.kde.org/stable/applications/19.08.1/src/konsole-19.08.1.tar.xz.sig
 Summary  : KDE's terminal emulator
 Group    : Development/Tools
 License  : GFDL-1.2 GPL-2.0 LGPL-2.0
@@ -92,14 +92,14 @@ locales components for the konsole package.
 
 
 %prep
-%setup -q -n konsole-19.08.0
+%setup -q -n konsole-19.08.1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1565906369
+export SOURCE_DATE_EPOCH=1567708064
 mkdir -p clr-build
 pushd clr-build
 # -Werror is for werrorists
@@ -116,7 +116,7 @@ make  %{?_smp_mflags} VERBOSE=1
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1565906369
+export SOURCE_DATE_EPOCH=1567708064
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/konsole
 cp COPYING %{buildroot}/usr/share/package-licenses/konsole/COPYING
@@ -194,7 +194,7 @@ popd
 %defattr(-,root,root,-)
 /usr/lib64/libkdeinit5_konsole.so
 /usr/lib64/libkonsoleprivate.so.19
-/usr/lib64/libkonsoleprivate.so.19.08.0
+/usr/lib64/libkonsoleprivate.so.19.08.1
 /usr/lib64/qt5/plugins/konsolepart.so
 
 %files license
