@@ -5,11 +5,11 @@
 # Source0 file verified with key 0xDBD2CE893E2D1C87 (cfeck@kde.org)
 #
 Name     : konsole
-Version  : 19.08.2
-Release  : 27
-URL      : https://download.kde.org/stable/applications/19.08.2/src/konsole-19.08.2.tar.xz
-Source0  : https://download.kde.org/stable/applications/19.08.2/src/konsole-19.08.2.tar.xz
-Source1 : https://download.kde.org/stable/applications/19.08.2/src/konsole-19.08.2.tar.xz.sig
+Version  : 19.08.3
+Release  : 28
+URL      : https://download.kde.org/stable/applications/19.08.3/src/konsole-19.08.3.tar.xz
+Source0  : https://download.kde.org/stable/applications/19.08.3/src/konsole-19.08.3.tar.xz
+Source1 : https://download.kde.org/stable/applications/19.08.3/src/konsole-19.08.3.tar.xz.sig
 Summary  : KDE's terminal emulator
 Group    : Development/Tools
 License  : GFDL-1.2 GPL-2.0 LGPL-2.0
@@ -92,14 +92,14 @@ locales components for the konsole package.
 
 
 %prep
-%setup -q -n konsole-19.08.2
+%setup -q -n konsole-19.08.3
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1570767420
+export SOURCE_DATE_EPOCH=1573175851
 mkdir -p clr-build
 pushd clr-build
 # -Werror is for werrorists
@@ -116,12 +116,12 @@ make  %{?_smp_mflags}  VERBOSE=1
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1570767420
+export SOURCE_DATE_EPOCH=1573175851
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/konsole
-cp COPYING %{buildroot}/usr/share/package-licenses/konsole/COPYING
-cp COPYING.DOC %{buildroot}/usr/share/package-licenses/konsole/COPYING.DOC
-cp COPYING.LIB %{buildroot}/usr/share/package-licenses/konsole/COPYING.LIB
+cp %{_builddir}/konsole-19.08.3/COPYING %{buildroot}/usr/share/package-licenses/konsole/7c203dee3a03037da436df03c4b25b659c073976
+cp %{_builddir}/konsole-19.08.3/COPYING.DOC %{buildroot}/usr/share/package-licenses/konsole/fcbf818f92ef8679a88f3778b12b4c8b5810545b
+cp %{_builddir}/konsole-19.08.3/COPYING.LIB %{buildroot}/usr/share/package-licenses/konsole/ba8966e2473a9969bdcab3dc82274c817cfd98a1
 pushd clr-build
 %make_install
 popd
@@ -194,14 +194,14 @@ popd
 %defattr(-,root,root,-)
 /usr/lib64/libkdeinit5_konsole.so
 /usr/lib64/libkonsoleprivate.so.19
-/usr/lib64/libkonsoleprivate.so.19.08.2
+/usr/lib64/libkonsoleprivate.so.19.08.3
 /usr/lib64/qt5/plugins/konsolepart.so
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/konsole/COPYING
-/usr/share/package-licenses/konsole/COPYING.DOC
-/usr/share/package-licenses/konsole/COPYING.LIB
+/usr/share/package-licenses/konsole/7c203dee3a03037da436df03c4b25b659c073976
+/usr/share/package-licenses/konsole/ba8966e2473a9969bdcab3dc82274c817cfd98a1
+/usr/share/package-licenses/konsole/fcbf818f92ef8679a88f3778b12b4c8b5810545b
 
 %files locales -f konsole.lang
 %defattr(-,root,root,-)
