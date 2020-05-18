@@ -5,12 +5,12 @@
 # Source0 file verified with key 0xDBD2CE893E2D1C87 (cfeck@kde.org)
 #
 Name     : konsole
-Version  : 20.04.0
-Release  : 33
-URL      : https://download.kde.org/stable/release-service/20.04.0/src/konsole-20.04.0.tar.xz
-Source0  : https://download.kde.org/stable/release-service/20.04.0/src/konsole-20.04.0.tar.xz
-Source1  : https://download.kde.org/stable/release-service/20.04.0/src/konsole-20.04.0.tar.xz.sig
-Summary  : KDE's terminal emulator
+Version  : 20.04.1
+Release  : 34
+URL      : https://download.kde.org/stable/release-service/20.04.1/src/konsole-20.04.1.tar.xz
+Source0  : https://download.kde.org/stable/release-service/20.04.1/src/konsole-20.04.1.tar.xz
+Source1  : https://download.kde.org/stable/release-service/20.04.1/src/konsole-20.04.1.tar.xz.sig
+Summary  : No detailed summary available
 Group    : Development/Tools
 License  : GFDL-1.2 GPL-2.0 LGPL-2.0
 Requires: konsole-bin = %{version}-%{release}
@@ -21,23 +21,18 @@ Requires: konsole-locales = %{version}-%{release}
 BuildRequires : buildreq-cmake
 BuildRequires : buildreq-kde
 BuildRequires : buildreq-qmake
+BuildRequires : extra-cmake-modules-data
+BuildRequires : kdoctools-dev
 BuildRequires : kglobalaccel-dev
 BuildRequires : knotifyconfig-dev
 BuildRequires : libX11-dev libICE-dev libSM-dev libXau-dev libXcomposite-dev libXcursor-dev libXdamage-dev libXdmcp-dev libXext-dev libXfixes-dev libXft-dev libXi-dev libXinerama-dev libXi-dev libXmu-dev libXpm-dev libXrandr-dev libXrender-dev libXres-dev libXScrnSaver-dev libXt-dev libXtst-dev libXv-dev libXxf86misc-dev libXxf86vm-dev
+BuildRequires : qtbase-dev
 BuildRequires : qtbase-dev mesa-dev
 
 %description
-> Konsole is a *great* program, but is designed for the end user to have a
-> lot of control over their session--which in our environment would be
-> very bad.  The users have no clue what emulation to pick, how many
-> columns and rows they need.
-> What would really help is some command line arguments that would take
-> configure certain items, and then disable them from the pulldowns along
-> the top.
-> For instance, if the command --noscrollbar was issued, it would turn off
-> the scroll bar and then now allow them to turn it back on again via the
-> pulldowns.
-> The more things that I could configure via the command line, the better.
+Konsole - KDE's Terminal Emulator
+==================================
+Konsole is a terminal program for KDE.
 
 %package bin
 Summary: bin components for the konsole package.
@@ -92,37 +87,36 @@ locales components for the konsole package.
 
 
 %prep
-%setup -q -n konsole-20.04.0
-cd %{_builddir}/konsole-20.04.0
+%setup -q -n konsole-20.04.1
+cd %{_builddir}/konsole-20.04.1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1587688800
+export SOURCE_DATE_EPOCH=1589840626
 mkdir -p clr-build
 pushd clr-build
-# -Werror is for werrorists
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
 export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
-export FCFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
-export FFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
 export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 "
 %cmake ..
 make  %{?_smp_mflags}  VERBOSE=1
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1587688800
+export SOURCE_DATE_EPOCH=1589840626
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/konsole
-cp %{_builddir}/konsole-20.04.0/COPYING %{buildroot}/usr/share/package-licenses/konsole/7c203dee3a03037da436df03c4b25b659c073976
-cp %{_builddir}/konsole-20.04.0/COPYING.DOC %{buildroot}/usr/share/package-licenses/konsole/fcbf818f92ef8679a88f3778b12b4c8b5810545b
-cp %{_builddir}/konsole-20.04.0/COPYING.LIB %{buildroot}/usr/share/package-licenses/konsole/ba8966e2473a9969bdcab3dc82274c817cfd98a1
+cp %{_builddir}/konsole-20.04.1/COPYING %{buildroot}/usr/share/package-licenses/konsole/7c203dee3a03037da436df03c4b25b659c073976
+cp %{_builddir}/konsole-20.04.1/COPYING.DOC %{buildroot}/usr/share/package-licenses/konsole/fcbf818f92ef8679a88f3778b12b4c8b5810545b
+cp %{_builddir}/konsole-20.04.1/COPYING.LIB %{buildroot}/usr/share/package-licenses/konsole/ba8966e2473a9969bdcab3dc82274c817cfd98a1
 pushd clr-build
 %make_install
 popd
@@ -195,7 +189,7 @@ popd
 %defattr(-,root,root,-)
 /usr/lib64/libkdeinit5_konsole.so
 /usr/lib64/libkonsoleprivate.so.20
-/usr/lib64/libkonsoleprivate.so.20.04.0
+/usr/lib64/libkonsoleprivate.so.20.04.1
 /usr/lib64/qt5/plugins/konsolepart.so
 
 %files license
