@@ -5,11 +5,11 @@
 # Source0 file verified with key 0xDBD2CE893E2D1C87 (cfeck@kde.org)
 #
 Name     : konsole
-Version  : 20.04.2
-Release  : 35
-URL      : https://download.kde.org/stable/release-service/20.04.2/src/konsole-20.04.2.tar.xz
-Source0  : https://download.kde.org/stable/release-service/20.04.2/src/konsole-20.04.2.tar.xz
-Source1  : https://download.kde.org/stable/release-service/20.04.2/src/konsole-20.04.2.tar.xz.sig
+Version  : 20.08.0
+Release  : 36
+URL      : https://download.kde.org/stable/release-service/20.08.0/src/konsole-20.08.0.tar.xz
+Source0  : https://download.kde.org/stable/release-service/20.08.0/src/konsole-20.08.0.tar.xz
+Source1  : https://download.kde.org/stable/release-service/20.08.0/src/konsole-20.08.0.tar.xz.sig
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : GFDL-1.2 GPL-2.0 LGPL-2.0
@@ -30,9 +30,8 @@ BuildRequires : qtbase-dev
 BuildRequires : qtbase-dev mesa-dev
 
 %description
-Konsole - KDE's Terminal Emulator
-==================================
-Konsole is a terminal program for KDE.
+Use CheckXML to verify the file is valid XML
+Use meinproc5 to create an HTML version for local viewing.
 
 %package bin
 Summary: bin components for the konsole package.
@@ -87,15 +86,15 @@ locales components for the konsole package.
 
 
 %prep
-%setup -q -n konsole-20.04.2
-cd %{_builddir}/konsole-20.04.2
+%setup -q -n konsole-20.08.0
+cd %{_builddir}/konsole-20.08.0
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1591895875
+export SOURCE_DATE_EPOCH=1597791534
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
@@ -107,16 +106,16 @@ export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
 export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
 export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 "
 %cmake ..
-make  %{?_smp_mflags}  VERBOSE=1
+make  %{?_smp_mflags}
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1591895875
+export SOURCE_DATE_EPOCH=1597791534
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/konsole
-cp %{_builddir}/konsole-20.04.2/COPYING %{buildroot}/usr/share/package-licenses/konsole/7c203dee3a03037da436df03c4b25b659c073976
-cp %{_builddir}/konsole-20.04.2/COPYING.DOC %{buildroot}/usr/share/package-licenses/konsole/fcbf818f92ef8679a88f3778b12b4c8b5810545b
-cp %{_builddir}/konsole-20.04.2/COPYING.LIB %{buildroot}/usr/share/package-licenses/konsole/ba8966e2473a9969bdcab3dc82274c817cfd98a1
+cp %{_builddir}/konsole-20.08.0/COPYING %{buildroot}/usr/share/package-licenses/konsole/7c203dee3a03037da436df03c4b25b659c073976
+cp %{_builddir}/konsole-20.08.0/COPYING.DOC %{buildroot}/usr/share/package-licenses/konsole/0c4be15f5177aafffe980ca09c0f4ca6ed741f43
+cp %{_builddir}/konsole-20.08.0/COPYING.LIB %{buildroot}/usr/share/package-licenses/konsole/ba8966e2473a9969bdcab3dc82274c817cfd98a1
 pushd clr-build
 %make_install
 popd
@@ -168,6 +167,7 @@ popd
 /usr/share/doc/HTML/en/konsole/draganddrop-contextmenu.png
 /usr/share/doc/HTML/en/konsole/index.cache.bz2
 /usr/share/doc/HTML/en/konsole/index.docbook
+/usr/share/doc/HTML/it/konsole/draganddrop-contextmenu.png
 /usr/share/doc/HTML/it/konsole/index.cache.bz2
 /usr/share/doc/HTML/it/konsole/index.docbook
 /usr/share/doc/HTML/nl/konsole/index.cache.bz2
@@ -184,19 +184,21 @@ popd
 /usr/share/doc/HTML/uk/konsole/draganddrop-contextmenu.png
 /usr/share/doc/HTML/uk/konsole/index.cache.bz2
 /usr/share/doc/HTML/uk/konsole/index.docbook
+/usr/share/doc/HTML/zh_CN/konsole/index.cache.bz2
+/usr/share/doc/HTML/zh_CN/konsole/index.docbook
 
 %files lib
 %defattr(-,root,root,-)
 /usr/lib64/libkdeinit5_konsole.so
 /usr/lib64/libkonsoleprivate.so.20
-/usr/lib64/libkonsoleprivate.so.20.04.2
+/usr/lib64/libkonsoleprivate.so.20.08.0
 /usr/lib64/qt5/plugins/konsolepart.so
 
 %files license
 %defattr(0644,root,root,0755)
+/usr/share/package-licenses/konsole/0c4be15f5177aafffe980ca09c0f4ca6ed741f43
 /usr/share/package-licenses/konsole/7c203dee3a03037da436df03c4b25b659c073976
 /usr/share/package-licenses/konsole/ba8966e2473a9969bdcab3dc82274c817cfd98a1
-/usr/share/package-licenses/konsole/fcbf818f92ef8679a88f3778b12b4c8b5810545b
 
 %files locales -f konsole.lang
 %defattr(-,root,root,-)
