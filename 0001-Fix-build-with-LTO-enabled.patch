@@ -1,0 +1,21 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Patrick McCarty <patrick.mccarty@intel.com>
+Date: Mon, 14 Dec 2020 02:56:15 +0000
+Subject: [PATCH] Fix build with LTO enabled
+
+Signed-off-by: Patrick McCarty <patrick.mccarty@intel.com>
+---
+ src/keyboardtranslator/CMakeLists.txt | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/keyboardtranslator/CMakeLists.txt b/src/keyboardtranslator/CMakeLists.txt
+index 812d5c58..dc651f90 100644
+--- a/src/keyboardtranslator/CMakeLists.txt
++++ b/src/keyboardtranslator/CMakeLists.txt
+@@ -10,5 +10,6 @@ add_library(keyboardtranslator
+ target_link_libraries(
+     keyboardtranslator
+     ${konsole_LIBS}
++    konsoleprivate_core
+ )
+ 
