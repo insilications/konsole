@@ -5,14 +5,14 @@
 # Source0 file verified with key 0xBB463350D6EF31EF (heiko@shruuf.de)
 #
 Name     : konsole
-Version  : 20.12.3
-Release  : 42
-URL      : https://download.kde.org/stable/release-service/20.12.3/src/konsole-20.12.3.tar.xz
-Source0  : https://download.kde.org/stable/release-service/20.12.3/src/konsole-20.12.3.tar.xz
-Source1  : https://download.kde.org/stable/release-service/20.12.3/src/konsole-20.12.3.tar.xz.sig
+Version  : 21.04.0
+Release  : 43
+URL      : https://download.kde.org/stable/release-service/21.04.0/src/konsole-21.04.0.tar.xz
+Source0  : https://download.kde.org/stable/release-service/21.04.0/src/konsole-21.04.0.tar.xz
+Source1  : https://download.kde.org/stable/release-service/21.04.0/src/konsole-21.04.0.tar.xz.sig
 Summary  : No detailed summary available
 Group    : Development/Tools
-License  : GFDL-1.2 GPL-2.0 LGPL-2.0
+License  : GFDL-1.2 GPL-2.0 GPL-3.0 LGPL-2.0
 Requires: konsole-bin = %{version}-%{release}
 Requires: konsole-data = %{version}-%{release}
 Requires: konsole-lib = %{version}-%{release}
@@ -31,8 +31,11 @@ BuildRequires : qtbase-dev mesa-dev
 Patch1: 0001-Fix-build-with-LTO-enabled.patch
 
 %description
-Use CheckXML to verify the file is valid XML
-Use meinproc5 to create an HTML version for local viewing.
+Developer Documentation for Konsole
+Authors:        Robert Knight < robertknight@gmail.com >
+Last Updated:   7th May 2007
+Summary:        Introduction to Konsole developer documentation
+===============================================================
 
 %package bin
 Summary: bin components for the konsole package.
@@ -87,8 +90,8 @@ locales components for the konsole package.
 
 
 %prep
-%setup -q -n konsole-20.12.3
-cd %{_builddir}/konsole-20.12.3
+%setup -q -n konsole-21.04.0
+cd %{_builddir}/konsole-21.04.0
 %patch1 -p1
 
 %build
@@ -96,7 +99,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1618687804
+export SOURCE_DATE_EPOCH=1619222164
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
@@ -112,12 +115,18 @@ make  %{?_smp_mflags}
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1618687804
+export SOURCE_DATE_EPOCH=1619222164
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/konsole
-cp %{_builddir}/konsole-20.12.3/COPYING %{buildroot}/usr/share/package-licenses/konsole/7c203dee3a03037da436df03c4b25b659c073976
-cp %{_builddir}/konsole-20.12.3/COPYING.DOC %{buildroot}/usr/share/package-licenses/konsole/0c4be15f5177aafffe980ca09c0f4ca6ed741f43
-cp %{_builddir}/konsole-20.12.3/COPYING.LIB %{buildroot}/usr/share/package-licenses/konsole/ba8966e2473a9969bdcab3dc82274c817cfd98a1
+cp %{_builddir}/konsole-21.04.0/COPYING %{buildroot}/usr/share/package-licenses/konsole/7c203dee3a03037da436df03c4b25b659c073976
+cp %{_builddir}/konsole-21.04.0/COPYING.DOC %{buildroot}/usr/share/package-licenses/konsole/0c4be15f5177aafffe980ca09c0f4ca6ed741f43
+cp %{_builddir}/konsole-21.04.0/COPYING.LIB %{buildroot}/usr/share/package-licenses/konsole/ba8966e2473a9969bdcab3dc82274c817cfd98a1
+cp %{_builddir}/konsole-21.04.0/LICENSES/GPL-2.0-only.txt %{buildroot}/usr/share/package-licenses/konsole/2a638514c87c4923c0570c55822620fad56f2a33
+cp %{_builddir}/konsole-21.04.0/LICENSES/GPL-2.0-or-later.txt %{buildroot}/usr/share/package-licenses/konsole/e712eadfab0d2357c0f50f599ef35ee0d87534cb
+cp %{_builddir}/konsole-21.04.0/LICENSES/GPL-3.0-only.txt %{buildroot}/usr/share/package-licenses/konsole/6091db0aead0d90182b93d3c0d09ba93d188f907
+cp %{_builddir}/konsole-21.04.0/LICENSES/LGPL-2.0-only.txt %{buildroot}/usr/share/package-licenses/konsole/20079e8f79713dce80ab09774505773c926afa2a
+cp %{_builddir}/konsole-21.04.0/LICENSES/LicenseRef-KDE-Accepted-GPL.txt %{buildroot}/usr/share/package-licenses/konsole/7d9831e05094ce723947d729c2a46a09d6e90275
+cp %{_builddir}/konsole-21.04.0/LICENSES/LicenseRef-KDE-Accepted-GPL.txt %{buildroot}/usr/share/package-licenses/konsole/7d9831e05094ce723947d729c2a46a09d6e90275
 pushd clr-build
 %make_install
 popd
@@ -153,7 +162,6 @@ popd
 /usr/share/konsole/linux.keytab
 /usr/share/konsole/macos.keytab
 /usr/share/konsole/solaris.keytab
-/usr/share/kservices5/ServiceMenus/konsolehere.desktop
 /usr/share/kservices5/ServiceMenus/konsolerun.desktop
 /usr/share/kservices5/konsolepart.desktop
 /usr/share/kservicetypes5/terminalemulator.desktop
@@ -180,8 +188,6 @@ popd
 /usr/share/doc/HTML/pt_BR/konsole/draganddrop-contextmenu.png
 /usr/share/doc/HTML/pt_BR/konsole/index.cache.bz2
 /usr/share/doc/HTML/pt_BR/konsole/index.docbook
-/usr/share/doc/HTML/ru/konsole/index.cache.bz2
-/usr/share/doc/HTML/ru/konsole/index.docbook
 /usr/share/doc/HTML/sr/konsole/index.cache.bz2
 /usr/share/doc/HTML/sr/konsole/index.docbook
 /usr/share/doc/HTML/sv/konsole/index.cache.bz2
@@ -195,15 +201,20 @@ popd
 %files lib
 %defattr(-,root,root,-)
 /usr/lib64/libkdeinit5_konsole.so
-/usr/lib64/libkonsoleprivate.so.20
-/usr/lib64/libkonsoleprivate.so.20.12.3
+/usr/lib64/libkonsoleprivate.so.21
+/usr/lib64/libkonsoleprivate.so.21.04.0
 /usr/lib64/qt5/plugins/konsolepart.so
 
 %files license
 %defattr(0644,root,root,0755)
 /usr/share/package-licenses/konsole/0c4be15f5177aafffe980ca09c0f4ca6ed741f43
+/usr/share/package-licenses/konsole/20079e8f79713dce80ab09774505773c926afa2a
+/usr/share/package-licenses/konsole/2a638514c87c4923c0570c55822620fad56f2a33
+/usr/share/package-licenses/konsole/6091db0aead0d90182b93d3c0d09ba93d188f907
 /usr/share/package-licenses/konsole/7c203dee3a03037da436df03c4b25b659c073976
+/usr/share/package-licenses/konsole/7d9831e05094ce723947d729c2a46a09d6e90275
 /usr/share/package-licenses/konsole/ba8966e2473a9969bdcab3dc82274c817cfd98a1
+/usr/share/package-licenses/konsole/e712eadfab0d2357c0f50f599ef35ee0d87534cb
 
 %files locales -f konsole.lang
 %defattr(-,root,root,-)
