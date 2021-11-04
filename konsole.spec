@@ -5,11 +5,11 @@
 # Source0 file verified with key 0xBB463350D6EF31EF (heiko@shruuf.de)
 #
 Name     : konsole
-Version  : 21.08.2
-Release  : 47
-URL      : https://download.kde.org/stable/release-service/21.08.2/src/konsole-21.08.2.tar.xz
-Source0  : https://download.kde.org/stable/release-service/21.08.2/src/konsole-21.08.2.tar.xz
-Source1  : https://download.kde.org/stable/release-service/21.08.2/src/konsole-21.08.2.tar.xz.sig
+Version  : 21.08.3
+Release  : 48
+URL      : https://download.kde.org/stable/release-service/21.08.3/src/konsole-21.08.3.tar.xz
+Source0  : https://download.kde.org/stable/release-service/21.08.3/src/konsole-21.08.3.tar.xz
+Source1  : https://download.kde.org/stable/release-service/21.08.3/src/konsole-21.08.3.tar.xz.sig
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : GFDL-1.2 GPL-2.0 GPL-3.0 LGPL-2.0 MIT
@@ -90,8 +90,8 @@ locales components for the konsole package.
 
 
 %prep
-%setup -q -n konsole-21.08.2
-cd %{_builddir}/konsole-21.08.2
+%setup -q -n konsole-21.08.3
+cd %{_builddir}/konsole-21.08.3
 %patch1 -p1
 
 %build
@@ -99,7 +99,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1634347125
+export SOURCE_DATE_EPOCH=1636056545
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
@@ -115,19 +115,19 @@ make  %{?_smp_mflags}
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1634347125
+export SOURCE_DATE_EPOCH=1636056545
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/konsole
-cp %{_builddir}/konsole-21.08.2/COPYING %{buildroot}/usr/share/package-licenses/konsole/7c203dee3a03037da436df03c4b25b659c073976
-cp %{_builddir}/konsole-21.08.2/COPYING.DOC %{buildroot}/usr/share/package-licenses/konsole/0c4be15f5177aafffe980ca09c0f4ca6ed741f43
-cp %{_builddir}/konsole-21.08.2/COPYING.LIB %{buildroot}/usr/share/package-licenses/konsole/ba8966e2473a9969bdcab3dc82274c817cfd98a1
-cp %{_builddir}/konsole-21.08.2/LICENSES/GPL-2.0-only.txt %{buildroot}/usr/share/package-licenses/konsole/2a638514c87c4923c0570c55822620fad56f2a33
-cp %{_builddir}/konsole-21.08.2/LICENSES/GPL-2.0-or-later.txt %{buildroot}/usr/share/package-licenses/konsole/e712eadfab0d2357c0f50f599ef35ee0d87534cb
-cp %{_builddir}/konsole-21.08.2/LICENSES/GPL-3.0-only.txt %{buildroot}/usr/share/package-licenses/konsole/6091db0aead0d90182b93d3c0d09ba93d188f907
-cp %{_builddir}/konsole-21.08.2/LICENSES/LGPL-2.0-only.txt %{buildroot}/usr/share/package-licenses/konsole/20079e8f79713dce80ab09774505773c926afa2a
-cp %{_builddir}/konsole-21.08.2/LICENSES/LicenseRef-KDE-Accepted-GPL.txt %{buildroot}/usr/share/package-licenses/konsole/7d9831e05094ce723947d729c2a46a09d6e90275
-cp %{_builddir}/konsole-21.08.2/LICENSES/LicenseRef-KDE-Accepted-GPL.txt %{buildroot}/usr/share/package-licenses/konsole/7d9831e05094ce723947d729c2a46a09d6e90275
-cp %{_builddir}/konsole-21.08.2/LICENSES/MIT.txt %{buildroot}/usr/share/package-licenses/konsole/adadb67a9875aeeac285309f1eab6e47d9ee08a7
+cp %{_builddir}/konsole-21.08.3/COPYING %{buildroot}/usr/share/package-licenses/konsole/7c203dee3a03037da436df03c4b25b659c073976
+cp %{_builddir}/konsole-21.08.3/COPYING.DOC %{buildroot}/usr/share/package-licenses/konsole/0c4be15f5177aafffe980ca09c0f4ca6ed741f43
+cp %{_builddir}/konsole-21.08.3/COPYING.LIB %{buildroot}/usr/share/package-licenses/konsole/ba8966e2473a9969bdcab3dc82274c817cfd98a1
+cp %{_builddir}/konsole-21.08.3/LICENSES/GPL-2.0-only.txt %{buildroot}/usr/share/package-licenses/konsole/2a638514c87c4923c0570c55822620fad56f2a33
+cp %{_builddir}/konsole-21.08.3/LICENSES/GPL-2.0-or-later.txt %{buildroot}/usr/share/package-licenses/konsole/e712eadfab0d2357c0f50f599ef35ee0d87534cb
+cp %{_builddir}/konsole-21.08.3/LICENSES/GPL-3.0-only.txt %{buildroot}/usr/share/package-licenses/konsole/6091db0aead0d90182b93d3c0d09ba93d188f907
+cp %{_builddir}/konsole-21.08.3/LICENSES/LGPL-2.0-only.txt %{buildroot}/usr/share/package-licenses/konsole/20079e8f79713dce80ab09774505773c926afa2a
+cp %{_builddir}/konsole-21.08.3/LICENSES/LicenseRef-KDE-Accepted-GPL.txt %{buildroot}/usr/share/package-licenses/konsole/7d9831e05094ce723947d729c2a46a09d6e90275
+cp %{_builddir}/konsole-21.08.3/LICENSES/LicenseRef-KDE-Accepted-GPL.txt %{buildroot}/usr/share/package-licenses/konsole/7d9831e05094ce723947d729c2a46a09d6e90275
+cp %{_builddir}/konsole-21.08.3/LICENSES/MIT.txt %{buildroot}/usr/share/package-licenses/konsole/adadb67a9875aeeac285309f1eab6e47d9ee08a7
 pushd clr-build
 %make_install
 popd
@@ -192,6 +192,8 @@ popd
 /usr/share/doc/HTML/pt_BR/konsole/draganddrop-contextmenu.png
 /usr/share/doc/HTML/pt_BR/konsole/index.cache.bz2
 /usr/share/doc/HTML/pt_BR/konsole/index.docbook
+/usr/share/doc/HTML/ru/konsole/index.cache.bz2
+/usr/share/doc/HTML/ru/konsole/index.docbook
 /usr/share/doc/HTML/sr/konsole/index.cache.bz2
 /usr/share/doc/HTML/sr/konsole/index.docbook
 /usr/share/doc/HTML/sv/konsole/index.cache.bz2
@@ -205,9 +207,9 @@ popd
 %files lib
 %defattr(-,root,root,-)
 /usr/lib64/libkonsoleapp.so.21
-/usr/lib64/libkonsoleapp.so.21.08.2
+/usr/lib64/libkonsoleapp.so.21.08.3
 /usr/lib64/libkonsoleprivate.so.21
-/usr/lib64/libkonsoleprivate.so.21.08.2
+/usr/lib64/libkonsoleprivate.so.21.08.3
 /usr/lib64/qt5/plugins/konsolepart.so
 
 %files license
