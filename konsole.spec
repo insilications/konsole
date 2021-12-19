@@ -5,7 +5,7 @@
 %define keepstatic 1
 Name     : konsole
 Version  : 21.12.0
-Release  : 314
+Release  : 316
 URL      : file:///aot/build/clearlinux/packages/konsole/konsole-v21.12.0.tar.gz
 Source0  : file:///aot/build/clearlinux/packages/konsole/konsole-v21.12.0.tar.gz
 Summary  : No detailed summary available
@@ -88,7 +88,7 @@ unset https_proxy
 unset no_proxy
 export SSL_CERT_FILE=/var/cache/ca-certs/anchors/ca-certificates.crt
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1639902823
+export SOURCE_DATE_EPOCH=1639903367
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
@@ -187,10 +187,19 @@ export FCFLAGS="${FCFLAGS_GENERATE}"
 export LDFLAGS="${LDFLAGS_GENERATE}"
 export ASMFLAGS="${ASMFLAGS_GENERATE}"
 export LIBS="${LIBS_GENERATE}"
-%cmake .. -DCMAKE_VISIBILITY_INLINES_HIDDEN=False \
+%cmake .. -DCMAKE_VISIBILITY_INLINES_HIDDEN:BOOL=OFF \
 -DENABLE_PLUGIN_SSHMANAGER:BOOL=OFF \
 -DINSTALL_ICONS:BOOL=ON \
 -DBUILD_TESTING:BOOL=ON
+## make_prepend64 content
+find . -type f -name 'Makefile*' -exec sed -i 's:-fvisibility-inlines-hidden\b::g' {} \;
+find . -type f -name '*.make' -exec sed -i 's:-fvisibility-inlines-hidden\b::g' {} \;
+find . -type f -name 'link.txt' -exec sed -i 's:-fvisibility-inlines-hidden\b::g' {} \;
+#
+find . -type f -name 'Makefile*' -exec sed -i 's:-fvisibility=hidden\b::g' {} \;
+find . -type f -name '*.make' -exec sed -i 's:-fvisibility=hidden\b::g' {} \;
+find . -type f -name 'link.txt' -exec sed -i 's:-fvisibility=hidden\b::g' {} \;
+## make_prepend64 end
 make  %{?_smp_mflags}    V=1 VERBOSE=1
 
 ## profile_payload start
@@ -242,16 +251,25 @@ export FCFLAGS="${FCFLAGS_USE}"
 export LDFLAGS="${LDFLAGS_USE}"
 export ASMFLAGS="${ASMFLAGS_USE}"
 export LIBS="${LIBS_USE}"
-%cmake .. -DCMAKE_VISIBILITY_INLINES_HIDDEN=False \
+%cmake .. -DCMAKE_VISIBILITY_INLINES_HIDDEN:BOOL=OFF \
 -DENABLE_PLUGIN_SSHMANAGER:BOOL=OFF \
 -DINSTALL_ICONS:BOOL=ON \
 -DBUILD_TESTING:BOOL=OFF
+## make_prepend64 content
+find . -type f -name 'Makefile*' -exec sed -i 's:-fvisibility-inlines-hidden\b::g' {} \;
+find . -type f -name '*.make' -exec sed -i 's:-fvisibility-inlines-hidden\b::g' {} \;
+find . -type f -name 'link.txt' -exec sed -i 's:-fvisibility-inlines-hidden\b::g' {} \;
+#
+find . -type f -name 'Makefile*' -exec sed -i 's:-fvisibility=hidden\b::g' {} \;
+find . -type f -name '*.make' -exec sed -i 's:-fvisibility=hidden\b::g' {} \;
+find . -type f -name 'link.txt' -exec sed -i 's:-fvisibility=hidden\b::g' {} \;
+## make_prepend64 end
 make  %{?_smp_mflags}    V=1 VERBOSE=1
 fi
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1639902823
+export SOURCE_DATE_EPOCH=1639903367
 rm -rf %{buildroot}
 pushd clr-build
 %make_install
