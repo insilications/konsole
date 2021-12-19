@@ -5,13 +5,12 @@
 %define keepstatic 1
 Name     : konsole
 Version  : 21.12.0
-Release  : 319
+Release  : 320
 URL      : file:///aot/build/clearlinux/packages/konsole/konsole-v21.12.0.tar.gz
 Source0  : file:///aot/build/clearlinux/packages/konsole/konsole-v21.12.0.tar.gz
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : GPL-2.0 LGPL-2.0
-BuildRequires : buildreq-cmake
 BuildRequires : buildreq-kde
 BuildRequires : buildreq-qmake
 BuildRequires : curl
@@ -35,7 +34,6 @@ BuildRequires : krb5-dev
 BuildRequires : libICE-dev
 BuildRequires : libSM-dev
 BuildRequires : libX11-dev
-BuildRequires : libX11-dev libICE-dev libSM-dev libXau-dev libXcomposite-dev libXcursor-dev libXdamage-dev libXdmcp-dev libXext-dev libXfixes-dev libXft-dev libXi-dev libXinerama-dev libXi-dev libXmu-dev libXpm-dev libXrandr-dev libXrender-dev libXres-dev libXScrnSaver-dev libXt-dev libXtst-dev libXv-dev libXxf86vm-dev
 BuildRequires : libXScrnSaver-dev
 BuildRequires : libXau-dev
 BuildRequires : libXcomposite-dev
@@ -66,7 +64,6 @@ BuildRequires : openssl-dev
 BuildRequires : openssl-staticdev
 BuildRequires : opus-dev
 BuildRequires : qtbase-dev
-BuildRequires : qtbase-dev mesa-dev
 BuildRequires : wayland
 BuildRequires : wayland-dev
 # Suppress stripping binaries
@@ -91,7 +88,7 @@ unset https_proxy
 unset no_proxy
 export SSL_CERT_FILE=/var/cache/ca-certs/anchors/ca-certificates.crt
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1639904003
+export SOURCE_DATE_EPOCH=1639904098
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
@@ -270,7 +267,7 @@ fi
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1639904003
+export SOURCE_DATE_EPOCH=1639904098
 rm -rf %{buildroot}
 pushd clr-build
 %make_install
