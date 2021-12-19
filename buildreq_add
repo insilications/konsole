@@ -8,6 +8,11 @@ curl-lib
 dbus
 dbus-dev
 extra-cmake-modules-data
+fontconfig
+fontconfig-dev
+fonts-clear
+freetype
+freetype-dev
 kdoctools-dev
 keyutils
 keyutils-dev
