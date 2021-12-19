@@ -1,7 +1,7 @@
 From 13fe6996548dd1456cee24c0e036b8cdcb09f6b4 Mon Sep 17 00:00:00 2001
 From: Francisco Boni <boboniboni@gmail.com>
 Date: Sun, 19 Dec 2021 03:38:58 -0300
-Subject: [PATCH 2/2] STATIC build
+Subject: [PATCH 2/3] STATIC build
 
 ---
  src/CMakeLists.txt | 34 ++++++++++++++++++++++------------

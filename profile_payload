@@ -1,4 +1,3 @@
-# setxkbmap -model pc105 -layout us -variant alt-intl
 export GTK_IM_MODULE="xim"
 export QT_IM_MODULE="cedilla"
 export FREETYPE_PROPERTIES="truetype:interpreter-version=40"

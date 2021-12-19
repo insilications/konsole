@@ -1,7 +1,5 @@
-# find . -type f -name 'Makefile*' -exec sed -i 's:-fvisibility-inlines-hidden\b::g' {} \;
-# find . -type f -name '*.make' -exec sed -i 's:-fvisibility-inlines-hidden\b::g' {} \;
-# find . -type f -name 'link.txt' -exec sed -i 's:-fvisibility-inlines-hidden\b::g' {} \;
-#
-# find . -type f -name 'Makefile*' -exec sed -i 's:-fvisibility=hidden\b::g' {} \;
-# find . -type f -name '*.make' -exec sed -i 's:-fvisibility=hidden\b::g' {} \;
-# find . -type f -name 'link.txt' -exec sed -i 's:-fvisibility=hidden\b::g' {} \;
+mkdir -p /builddir/.config || :
+cp -af ../konsolerc /builddir/.config/konsolerc ||
+mkdir -p /builddir/.local/share/konsole || :
+cp -af ../default.profile /builddir/.local/share/konsole/default.profile || ::
+cp -af ../Dracula.colorscheme /builddir/.local/share/konsole/Dracula.colorscheme || ::
