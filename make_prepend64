@@ -1,5 +1,5 @@
 mkdir -p /builddir/.config || :
-cp -af ../konsolerc /builddir/.config/konsolerc ||
+cp -af ../konsolerc /builddir/.config/konsolerc || :
 mkdir -p /builddir/.local/share/konsole || :
-cp -af ../default.profile /builddir/.local/share/konsole/default.profile || ::
-cp -af ../Dracula.colorscheme /builddir/.local/share/konsole/Dracula.colorscheme || ::
+cp -af ../default.profile /builddir/.local/share/konsole/default.profile || :
+cp -af ../Dracula.colorscheme /builddir/.local/share/konsole/Dracula.colorscheme || :

@@ -5,12 +5,13 @@
 %define keepstatic 1
 Name     : konsole
 Version  : 21.12.0
-Release  : 322
+Release  : 324
 URL      : file:///aot/build/clearlinux/packages/konsole/konsole-v21.12.0.tar.gz
 Source0  : file:///aot/build/clearlinux/packages/konsole/konsole-v21.12.0.tar.gz
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : GPL-2.0 LGPL-2.0
+BuildRequires : breeze-icons
 BuildRequires : buildreq-qmake
 BuildRequires : cairo-dev
 BuildRequires : curl
@@ -22,8 +23,13 @@ BuildRequires : extra-cmake-modules-data
 BuildRequires : fontconfig
 BuildRequires : fontconfig-dev
 BuildRequires : fonts-clear
+BuildRequires : frameworkintegration-dev
+BuildRequires : frameworkintegration-lib
+BuildRequires : frameworkintegration-license
 BuildRequires : freetype
 BuildRequires : freetype-dev
+BuildRequires : kdecoration-dev
+BuildRequires : kdecoration-lib
 BuildRequires : kdoctools-dev
 BuildRequires : keyutils
 BuildRequires : keyutils-dev
@@ -152,6 +158,7 @@ BuildRequires : xz
 %define debug_package %{nil}
 Patch1: 0001-Fix-build-with-LTO-enabled.patch
 Patch2: 0002-STATIC-build.patch
+Patch3: 0003-Config.patch
 
 %description
 Use CheckXML to verify the file is valid XML
@@ -162,6 +169,7 @@ Use meinproc5 to create an HTML version for local viewing.
 cd %{_builddir}/konsole
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 unset http_proxy
@@ -169,7 +177,7 @@ unset https_proxy
 unset no_proxy
 export SSL_CERT_FILE=/var/cache/ca-certs/anchors/ca-certificates.crt
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1639905590
+export SOURCE_DATE_EPOCH=1639906783
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
@@ -272,20 +280,17 @@ export LIBS="${LIBS_GENERATE}"
 -DINSTALL_ICONS:BOOL=ON \
 -DBUILD_TESTING:BOOL=ON
 ## make_prepend64 content
-# find . -type f -name 'Makefile*' -exec sed -i 's:-fvisibility-inlines-hidden\b::g' {} \;
-# find . -type f -name '*.make' -exec sed -i 's:-fvisibility-inlines-hidden\b::g' {} \;
-# find . -type f -name 'link.txt' -exec sed -i 's:-fvisibility-inlines-hidden\b::g' {} \;
-#
-# find . -type f -name 'Makefile*' -exec sed -i 's:-fvisibility=hidden\b::g' {} \;
-# find . -type f -name '*.make' -exec sed -i 's:-fvisibility=hidden\b::g' {} \;
-# find . -type f -name 'link.txt' -exec sed -i 's:-fvisibility=hidden\b::g' {} \;
+mkdir -p /builddir/.config || :
+cp -af ../konsolerc /builddir/.config/konsolerc ||
+mkdir -p /builddir/.local/share/konsole || :
+cp -af ../default.profile /builddir/.local/share/konsole/default.profile || :
+cp -af ../Dracula.colorscheme /builddir/.local/share/konsole/Dracula.colorscheme || :
 ## make_prepend64 end
 make  %{?_smp_mflags}    V=1 VERBOSE=1
 
 ## profile_payload start
 unset LD_LIBRARY_PATH
 unset LIBRARY_PATH
-# setxkbmap -model pc105 -layout us -variant alt-intl
 export GTK_IM_MODULE="xim"
 export QT_IM_MODULE="cedilla"
 export FREETYPE_PROPERTIES="truetype:interpreter-version=40"
@@ -341,20 +346,18 @@ export LIBS="${LIBS_USE}"
 -DINSTALL_ICONS:BOOL=ON \
 -DBUILD_TESTING:BOOL=OFF
 ## make_prepend64 content
-# find . -type f -name 'Makefile*' -exec sed -i 's:-fvisibility-inlines-hidden\b::g' {} \;
-# find . -type f -name '*.make' -exec sed -i 's:-fvisibility-inlines-hidden\b::g' {} \;
-# find . -type f -name 'link.txt' -exec sed -i 's:-fvisibility-inlines-hidden\b::g' {} \;
-#
-# find . -type f -name 'Makefile*' -exec sed -i 's:-fvisibility=hidden\b::g' {} \;
-# find . -type f -name '*.make' -exec sed -i 's:-fvisibility=hidden\b::g' {} \;
-# find . -type f -name 'link.txt' -exec sed -i 's:-fvisibility=hidden\b::g' {} \;
+mkdir -p /builddir/.config || :
+cp -af ../konsolerc /builddir/.config/konsolerc ||
+mkdir -p /builddir/.local/share/konsole || :
+cp -af ../default.profile /builddir/.local/share/konsole/default.profile || :
+cp -af ../Dracula.colorscheme /builddir/.local/share/konsole/Dracula.colorscheme || :
 ## make_prepend64 end
 make  %{?_smp_mflags}    V=1 VERBOSE=1
 fi
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1639905590
+export SOURCE_DATE_EPOCH=1639906783
 rm -rf %{buildroot}
 pushd clr-build
 %make_install
