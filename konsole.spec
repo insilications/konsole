@@ -5,14 +5,14 @@
 %define keepstatic 1
 Name     : konsole
 Version  : 21.12.0
-Release  : 320
+Release  : 322
 URL      : file:///aot/build/clearlinux/packages/konsole/konsole-v21.12.0.tar.gz
 Source0  : file:///aot/build/clearlinux/packages/konsole/konsole-v21.12.0.tar.gz
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : GPL-2.0 LGPL-2.0
-BuildRequires : buildreq-kde
 BuildRequires : buildreq-qmake
+BuildRequires : cairo-dev
 BuildRequires : curl
 BuildRequires : curl-dev
 BuildRequires : curl-lib
@@ -29,43 +29,124 @@ BuildRequires : keyutils
 BuildRequires : keyutils-dev
 BuildRequires : kglobalaccel-dev
 BuildRequires : knotifyconfig-dev
+BuildRequires : konsole
 BuildRequires : krb5
 BuildRequires : krb5-dev
 BuildRequires : libICE-dev
 BuildRequires : libSM-dev
+BuildRequires : libX11-data
 BuildRequires : libX11-dev
+BuildRequires : libX11-lib
+BuildRequires : libXScrnSaver
 BuildRequires : libXScrnSaver-dev
+BuildRequires : libXScrnSaver-lib
 BuildRequires : libXau-dev
+BuildRequires : libXau-lib
 BuildRequires : libXcomposite-dev
 BuildRequires : libXcursor-dev
+BuildRequires : libXcursor-lib
 BuildRequires : libXdamage-dev
+BuildRequires : libXdamage-lib
 BuildRequires : libXdmcp-dev
+BuildRequires : libXdmcp-lib
 BuildRequires : libXext-dev
+BuildRequires : libXext-lib
 BuildRequires : libXfixes-dev
+BuildRequires : libXfont2-dev
 BuildRequires : libXft-dev
+BuildRequires : libXft-lib
 BuildRequires : libXi-dev
+BuildRequires : libXi-lib
 BuildRequires : libXinerama-dev
 BuildRequires : libXmu-dev
 BuildRequires : libXpm-dev
 BuildRequires : libXrandr-dev
 BuildRequires : libXrender-dev
+BuildRequires : libXrender-lib
 BuildRequires : libXres-dev
 BuildRequires : libXt-dev
 BuildRequires : libXtst-dev
+BuildRequires : libXtst-lib
 BuildRequires : libXv-dev
 BuildRequires : libXxf86vm-dev
+BuildRequires : libXxf86vm-lib
 BuildRequires : libgcrypt-dev
 BuildRequires : libogg-dev
 BuildRequires : libsndfile-dev
 BuildRequires : libvorbis-dev
+BuildRequires : libxcb-dev
+BuildRequires : libxcb-lib
+BuildRequires : libxml2-dev
+BuildRequires : libxml2-staticdev
+BuildRequires : m4
 BuildRequires : mesa-dev
 BuildRequires : openssh
 BuildRequires : openssl-dev
 BuildRequires : openssl-staticdev
 BuildRequires : opus-dev
+BuildRequires : pcre-dev
+BuildRequires : pcre-staticdev
+BuildRequires : pcre2-dev
+BuildRequires : pcre2-staticdev
+BuildRequires : pixman-dev
+BuildRequires : pixman-staticdev
+BuildRequires : pkg-config
+BuildRequires : pkg-config-dev
+BuildRequires : python3-dev
+BuildRequires : python3-staticdev
 BuildRequires : qtbase-dev
+BuildRequires : requests
+BuildRequires : setxkbmap
+BuildRequires : util-linux
+BuildRequires : util-linux-dev
 BuildRequires : wayland
 BuildRequires : wayland-dev
+BuildRequires : xauth
+BuildRequires : xclip
+BuildRequires : xdg-dbus-proxy
+BuildRequires : xdg-desktop-portal
+BuildRequires : xdg-desktop-portal-dev
+BuildRequires : xdg-desktop-portal-gtk
+BuildRequires : xdg-desktop-portal-kde
+BuildRequires : xdg-user-dirs
+BuildRequires : xdg-user-dirs-gtk
+BuildRequires : xdg-utils
+BuildRequires : xdotool
+BuildRequires : xdpyinfo
+BuildRequires : xf86-input-libinput
+BuildRequires : xf86-video-amdgpu
+BuildRequires : xf86-video-ati
+BuildRequires : xf86-video-fbdev
+BuildRequires : xf86-video-nouveau
+BuildRequires : xf86-video-qxl
+BuildRequires : xf86-video-vboxvideo
+BuildRequires : xf86-video-vesa
+BuildRequires : xf86-video-vmware
+BuildRequires : xfontsel
+BuildRequires : xhost
+BuildRequires : xinit
+BuildRequires : xinput
+BuildRequires : xkbcomp
+BuildRequires : xkeyboard-config
+BuildRequires : xkill
+BuildRequires : xmodmap
+BuildRequires : xorg-server
+BuildRequires : xorg-server-dev
+BuildRequires : xorgproto
+BuildRequires : xorgproto-dev
+BuildRequires : xprop
+BuildRequires : xrandr
+BuildRequires : xrdb
+BuildRequires : xrdp
+BuildRequires : xrestop
+BuildRequires : xscreensaver
+BuildRequires : xsel
+BuildRequires : xset
+BuildRequires : xsetroot
+BuildRequires : xvfb-run
+BuildRequires : xwd
+BuildRequires : xwininfo
+BuildRequires : xz
 # Suppress stripping binaries
 %define __strip /bin/true
 %define debug_package %{nil}
@@ -88,7 +169,7 @@ unset https_proxy
 unset no_proxy
 export SSL_CERT_FILE=/var/cache/ca-certs/anchors/ca-certificates.crt
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1639904098
+export SOURCE_DATE_EPOCH=1639905590
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
@@ -204,6 +285,12 @@ make  %{?_smp_mflags}    V=1 VERBOSE=1
 ## profile_payload start
 unset LD_LIBRARY_PATH
 unset LIBRARY_PATH
+# setxkbmap -model pc105 -layout us -variant alt-intl
+export GTK_IM_MODULE="xim"
+export QT_IM_MODULE="cedilla"
+export FREETYPE_PROPERTIES="truetype:interpreter-version=40"
+export PLASMA_USE_QT_SCALING=1
+export QT_AUTO_SCREEN_SCALE_FACTOR=1
 export DISPLAY=:0
 export __GL_SYNC_TO_VBLANK=1
 export __GL_SYNC_DISPLAY_DEVICE=HDMI-0
@@ -226,7 +313,7 @@ export VDPAU_DRIVER=nvidia
 export LIBVA_DRIVER_NAME=vdpau
 export LIBVA_DRIVERS_PATH=/usr/lib64/dri
 export GTK_RC_FILES=/etc/gtk/gtkrc
-export FONTCONFIG_PATH=/usr/share/defaults/fonts
+export FONTCONFIG_PATH="/usr/share/defaults/fonts"
 export LD_LIBRARY_PATH="/builddir/build/BUILD/konsole/clr-build/bin:/usr/nvidia/lib64:/usr/nvidia/lib64/vdpau:/usr/nvidia/lib64/xorg/modules/drivers:/usr/nvidia/lib64/xorg/modules/extensions:/usr/local/cuda/lib64:/usr/lib64/haswell:/usr/lib64/haswell/pulseaudio:/usr/lib64/haswell/alsa-lib:/usr/lib64/haswell/gstreamer-1.0:/usr/lib64/haswell/pipewire-0.3:/usr/lib64/haswell/spa-0.2:/usr/lib64/dri:/usr/lib64:/usr/lib64/pulseaudio:/usr/lib64/alsa-lib:/usr/lib64/gstreamer-1.0:/usr/lib64/pipewire-0.3:/usr/lib64/spa-0.2:/usr/lib:/aot/intel/oneapi/compiler/latest/linux/compiler/lib/intel64_lin:/aot/intel/oneapi/compiler/latest/linux/lib:/aot/intel/oneapi/mkl/latest/lib/intel64:/aot/intel/oneapi/tbb/latest/lib/intel64/gcc4.8:/usr/share:/usr/lib64/wine:/usr/nvidia/lib32:/usr/nvidia/lib32/vdpau:/usr/lib32:/usr/lib32/wine"
 export LIBRARY_PATH="/builddir/build/BUILD/konsole/clr-build/bin:/usr/nvidia/lib64:/usr/nvidia/lib64/vdpau:/usr/nvidia/lib64/xorg/modules/drivers:/usr/nvidia/lib64/xorg/modules/extensions:/usr/local/cuda/lib64:/usr/lib64/haswell:/usr/lib64/haswell/pulseaudio:/usr/lib64/haswell/alsa-lib:/usr/lib64/haswell/gstreamer-1.0:/usr/lib64/haswell/pipewire-0.3:/usr/lib64/haswell/spa-0.2:/usr/lib64/dri:/usr/lib64:/usr/lib64/pulseaudio:/usr/lib64/alsa-lib:/usr/lib64/gstreamer-1.0:/usr/lib64/pipewire-0.3:/usr/lib64/spa-0.2:/usr/lib:/aot/intel/oneapi/compiler/latest/linux/compiler/lib/intel64_lin:/aot/intel/oneapi/compiler/latest/linux/lib:/aot/intel/oneapi/mkl/latest/lib/intel64:/aot/intel/oneapi/tbb/latest/lib/intel64/gcc4.8:/usr/share:/usr/lib64/wine:/usr/nvidia/lib32:/usr/nvidia/lib32/vdpau:/usr/lib32:/usr/lib32/wine"
 ctest --parallel 1 --verbose --progress || :
@@ -267,7 +354,7 @@ fi
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1639904098
+export SOURCE_DATE_EPOCH=1639905590
 rm -rf %{buildroot}
 pushd clr-build
 %make_install
