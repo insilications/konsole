@@ -1,12 +1,16 @@
 # This file contains additional build requirements that did not get
-# picked up automatically. One name per line, no whitespace.buildreq-cmakebuildreq-kdebreeze
+# picked up automatically. One name per line, no whitespace.
+breeze
 breeze-icons
+buildreq-cmake
+buildreq-kde
 buildreq-qmake
 cairo-dev
 curl
 curl-dev
 curl-lib
 dbus
+breeze-gtk
 dbus-dev
 extra-cmake-modules-data
 fontconfig
@@ -17,16 +21,29 @@ frameworkintegration-lib
 frameworkintegration-license
 freetype
 freetype-dev
+kactivities-dev
+kbookmarks-dev
+kconfig-dev
+kcoreaddons-dev
 kdecoration-dev
 kdecoration-lib
 kdoctools-dev
 keyutils
 keyutils-dev
 kglobalaccel-dev
+kguiaddons-dev
+ki18n-dev
+kiconthemes-dev
+kio-dev
+kitemmodels-dev
+kitemviews-dev
+knewstuff-dev
 knotifyconfig-dev
 konsole
 krb5
 krb5-dev
+ktexteditor-dev
+kwallet-dev
 libICE-dev
 libSM-dev
 libX11-data
@@ -87,11 +104,13 @@ pixman-dev
 pixman-staticdev
 pkg-config
 pkg-config-dev
+plasma-framework-dev
 python3-dev
 python3-staticdev
 qtbase-dev
 requests
 setxkbmap
+syntax-highlighting-dev
 util-linux
 util-linux-dev
 wayland
@@ -142,3 +161,4 @@ xvfb-run
 xwd
 xwininfo
 xz
+xz-dev
