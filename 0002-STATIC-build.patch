@@ -1,17 +1,17 @@
-From e8d27369cb27b27866ab85561c91ba2fe704f2be Mon Sep 17 00:00:00 2001
+From d6474a8a5a307a55453e91693566cf9696080217 Mon Sep 17 00:00:00 2001
 From: Francisco Boni <boboniboni@gmail.com>
 Date: Sun, 19 Dec 2021 03:38:58 -0300
 Subject: [PATCH 2/2] STATIC build
 
 ---
- src/CMakeLists.txt | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ src/CMakeLists.txt | 22 ++++++++++++++++------
+ 1 file changed, 16 insertions(+), 6 deletions(-)
 
 diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
-index dd2fd2b6..bedffedf 100644
+index dd2fd2b6..05f875ba 100644
 --- a/src/CMakeLists.txt
 +++ b/src/CMakeLists.txt
-@@ -227,7 +227,7 @@ ki18n_wrap_ui(konsoleprivate_SRCS
+@@ -227,9 +227,19 @@ ki18n_wrap_ui(konsoleprivate_SRCS
  # add the resource files for the ui files
  qt5_add_resources( konsoleprivate_SRCS ../desktop/konsole.qrc)
  
@@ -19,8 +19,20 @@ index dd2fd2b6..bedffedf 100644
 +add_library(konsoleprivate STATIC ${konsoleprivate_SRCS})
  generate_export_header(konsoleprivate BASE_NAME konsoleprivate)
  
++set_property(TARGET konsoleprivate_core PROPERTY VISIBILITY_INLINES_HIDDEN OFF)
++set_property(TARGET konsolecolorscheme PROPERTY VISIBILITY_INLINES_HIDDEN OFF)
++set_property(TARGET keyboardtranslator PROPERTY VISIBILITY_INLINES_HIDDEN OFF)
++set_property(TARGET konsolehelpers PROPERTY VISIBILITY_INLINES_HIDDEN OFF)
++set_property(TARGET konsolesession PROPERTY VISIBILITY_INLINES_HIDDEN OFF)
++set_property(TARGET konsoleprofile PROPERTY VISIBILITY_INLINES_HIDDEN OFF)
++set_property(TARGET konsolecharacters PROPERTY VISIBILITY_INLINES_HIDDEN OFF)
++set_property(TARGET konsoledecoders PROPERTY VISIBILITY_INLINES_HIDDEN OFF)
++set_property(TARGET konsoleprivate PROPERTY VISIBILITY_INLINES_HIDDEN OFF)
++
  target_link_libraries(konsoleprivate
-@@ -243,12 +243,12 @@ target_link_libraries(konsoleprivate
+     PUBLIC
+     konsoleprivate_core
+@@ -243,12 +253,12 @@ target_link_libraries(konsoleprivate
      ${konsole_LIBS}
  )
  
