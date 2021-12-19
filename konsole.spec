@@ -5,15 +5,12 @@
 %define keepstatic 1
 Name     : konsole
 Version  : 21.12.0
-Release  : 308
+Release  : 309
 URL      : file:///aot/build/clearlinux/packages/konsole/konsole-v21.12.0.tar.gz
 Source0  : file:///aot/build/clearlinux/packages/konsole/konsole-v21.12.0.tar.gz
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : GPL-2.0 LGPL-2.0
-Requires: konsole-bin = %{version}-%{release}
-Requires: konsole-data = %{version}-%{release}
-Requires: konsole-lib = %{version}-%{release}
 BuildRequires : buildreq-kde
 BuildRequires : buildreq-qmake
 BuildRequires : curl
@@ -74,48 +71,6 @@ Patch2: 0002-STATIC-build.patch
 Use CheckXML to verify the file is valid XML
 Use meinproc5 to create an HTML version for local viewing.
 
-%package bin
-Summary: bin components for the konsole package.
-Group: Binaries
-Requires: konsole-data = %{version}-%{release}
-
-%description bin
-bin components for the konsole package.
-
-
-%package data
-Summary: data components for the konsole package.
-Group: Data
-
-%description data
-data components for the konsole package.
-
-
-%package doc
-Summary: doc components for the konsole package.
-Group: Documentation
-
-%description doc
-doc components for the konsole package.
-
-
-%package lib
-Summary: lib components for the konsole package.
-Group: Libraries
-Requires: konsole-data = %{version}-%{release}
-
-%description lib
-lib components for the konsole package.
-
-
-%package staticdev
-Summary: staticdev components for the konsole package.
-Group: Default
-
-%description staticdev
-staticdev components for the konsole package.
-
-
 %prep
 %setup -q -n konsole
 cd %{_builddir}/konsole
@@ -128,7 +83,7 @@ unset https_proxy
 unset no_proxy
 export SSL_CERT_FILE=/var/cache/ca-certs/anchors/ca-certificates.crt
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1639896327
+export SOURCE_DATE_EPOCH=1639897978
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
@@ -282,7 +237,7 @@ fi
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1639896327
+export SOURCE_DATE_EPOCH=1639897978
 rm -rf %{buildroot}
 pushd clr-build
 %make_install
@@ -290,56 +245,3 @@ popd
 
 %files
 %defattr(-,root,root,-)
-
-%files bin
-%defattr(-,root,root,-)
-/usr/bin/konsole
-/usr/bin/konsoleprofile
-
-%files data
-%defattr(-,root,root,-)
-/usr/share/applications/org.kde.konsole.desktop
-/usr/share/khotkeys/konsole.khotkeys
-/usr/share/knotifications5/konsole.notifyrc
-/usr/share/knsrcfiles/konsole.knsrc
-/usr/share/konsole/1x2-terminals.json
-/usr/share/konsole/2x1-terminals.json
-/usr/share/konsole/2x2-terminals.json
-/usr/share/konsole/BlackOnLightYellow.colorscheme
-/usr/share/konsole/BlackOnRandomLight.colorscheme
-/usr/share/konsole/BlackOnWhite.colorscheme
-/usr/share/konsole/BlueOnBlack.colorscheme
-/usr/share/konsole/Breeze.colorscheme
-/usr/share/konsole/DarkPastels.colorscheme
-/usr/share/konsole/GreenOnBlack.colorscheme
-/usr/share/konsole/Linux.colorscheme
-/usr/share/konsole/RedOnBlack.colorscheme
-/usr/share/konsole/Solarized.colorscheme
-/usr/share/konsole/SolarizedLight.colorscheme
-/usr/share/konsole/WhiteOnBlack.colorscheme
-/usr/share/konsole/default.keytab
-/usr/share/konsole/linux.keytab
-/usr/share/konsole/macos.keytab
-/usr/share/konsole/solaris.keytab
-/usr/share/kservices5/ServiceMenus/konsolerun.desktop
-/usr/share/kservices5/konsolepart.desktop
-/usr/share/kservicetypes5/terminalemulator.desktop
-/usr/share/metainfo/org.kde.konsole.appdata.xml
-/usr/share/qlogging-categories5/konsole.categories
-
-%files doc
-%defattr(0644,root,root,0755)
-/usr/share/doc/HTML/en/konsole/draganddrop-contextmenu.png
-/usr/share/doc/HTML/en/konsole/index.cache.bz2
-/usr/share/doc/HTML/en/konsole/index.docbook
-
-%files lib
-%defattr(-,root,root,-)
-/usr/lib64/libkonsoleapp.so.1
-/usr/lib64/libkonsoleapp.so.22.03.70
-/usr/lib64/qt5/plugins/konsolepart.so
-/usr/lib64/qt5/plugins/konsoleplugins/konsole_sshmanagerplugin.so
-
-%files staticdev
-%defattr(-,root,root,-)
-/usr/lib64/libkonsoleprivate.a
