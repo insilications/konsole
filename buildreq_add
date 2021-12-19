@@ -44,8 +44,8 @@ libsndfile-dev
 libvorbis-dev
 mesa-dev
 openssh
-openssh-dev
 openssl-dev
+openssl-staticdev
 opus-dev
 qtbase-dev
 wayland

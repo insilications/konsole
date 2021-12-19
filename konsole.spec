@@ -5,17 +5,22 @@
 %define keepstatic 1
 Name     : konsole
 Version  : 21.12.0
-Release  : 307
+Release  : 308
 URL      : file:///aot/build/clearlinux/packages/konsole/konsole-v21.12.0.tar.gz
 Source0  : file:///aot/build/clearlinux/packages/konsole/konsole-v21.12.0.tar.gz
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : GPL-2.0 LGPL-2.0
+Requires: konsole-bin = %{version}-%{release}
+Requires: konsole-data = %{version}-%{release}
+Requires: konsole-lib = %{version}-%{release}
 BuildRequires : buildreq-kde
 BuildRequires : buildreq-qmake
 BuildRequires : curl
 BuildRequires : curl-dev
 BuildRequires : curl-lib
+BuildRequires : dbus
+BuildRequires : dbus-dev
 BuildRequires : extra-cmake-modules-data
 BuildRequires : kdoctools-dev
 BuildRequires : keyutils
@@ -52,7 +57,9 @@ BuildRequires : libogg-dev
 BuildRequires : libsndfile-dev
 BuildRequires : libvorbis-dev
 BuildRequires : mesa-dev
+BuildRequires : openssh
 BuildRequires : openssl-dev
+BuildRequires : openssl-staticdev
 BuildRequires : opus-dev
 BuildRequires : qtbase-dev
 BuildRequires : wayland
@@ -61,15 +68,59 @@ BuildRequires : wayland-dev
 %define __strip /bin/true
 %define debug_package %{nil}
 Patch1: 0001-Fix-build-with-LTO-enabled.patch
+Patch2: 0002-STATIC-build.patch
 
 %description
 Use CheckXML to verify the file is valid XML
 Use meinproc5 to create an HTML version for local viewing.
 
+%package bin
+Summary: bin components for the konsole package.
+Group: Binaries
+Requires: konsole-data = %{version}-%{release}
+
+%description bin
+bin components for the konsole package.
+
+
+%package data
+Summary: data components for the konsole package.
+Group: Data
+
+%description data
+data components for the konsole package.
+
+
+%package doc
+Summary: doc components for the konsole package.
+Group: Documentation
+
+%description doc
+doc components for the konsole package.
+
+
+%package lib
+Summary: lib components for the konsole package.
+Group: Libraries
+Requires: konsole-data = %{version}-%{release}
+
+%description lib
+lib components for the konsole package.
+
+
+%package staticdev
+Summary: staticdev components for the konsole package.
+Group: Default
+
+%description staticdev
+staticdev components for the konsole package.
+
+
 %prep
 %setup -q -n konsole
 cd %{_builddir}/konsole
 %patch1 -p1
+%patch2 -p1
 
 %build
 unset http_proxy
@@ -77,7 +128,7 @@ unset https_proxy
 unset no_proxy
 export SSL_CERT_FILE=/var/cache/ca-certs/anchors/ca-certificates.crt
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1639891445
+export SOURCE_DATE_EPOCH=1639896327
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
@@ -176,7 +227,7 @@ export FCFLAGS="${FCFLAGS_GENERATE}"
 export LDFLAGS="${LDFLAGS_GENERATE}"
 export ASMFLAGS="${ASMFLAGS_GENERATE}"
 export LIBS="${LIBS_GENERATE}"
-%cmake ..
+%cmake .. -DBUILD_TESTING:BOOL=ON
 make  %{?_smp_mflags}    V=1 VERBOSE=1
 
 ## profile_payload start
@@ -206,6 +257,10 @@ export LIBVA_DRIVERS_PATH=/usr/lib64/dri
 export GTK_RC_FILES=/etc/gtk/gtkrc
 export FONTCONFIG_PATH=/usr/share/defaults/fonts
 ctest --parallel 1 --verbose --progress || :
+pushd bin/
+./TerminalInterfaceTest || :
+./DBusTest || :
+popd
 export LD_LIBRARY_PATH="/usr/nvidia/lib64:/usr/nvidia/lib64/vdpau:/usr/nvidia/lib64/xorg/modules/drivers:/usr/nvidia/lib64/xorg/modules/extensions:/usr/local/cuda/lib64:/usr/lib64/haswell:/usr/lib64/haswell/pulseaudio:/usr/lib64/haswell/alsa-lib:/usr/lib64/haswell/gstreamer-1.0:/usr/lib64/haswell/pipewire-0.3:/usr/lib64/haswell/spa-0.2:/usr/lib64/dri:/usr/lib64:/usr/lib64/pulseaudio:/usr/lib64/alsa-lib:/usr/lib64/gstreamer-1.0:/usr/lib64/pipewire-0.3:/usr/lib64/spa-0.2:/usr/lib:/aot/intel/oneapi/compiler/latest/linux/compiler/lib/intel64_lin:/aot/intel/oneapi/compiler/latest/linux/lib:/aot/intel/oneapi/mkl/latest/lib/intel64:/aot/intel/oneapi/tbb/latest/lib/intel64/gcc4.8:/usr/share:/usr/lib64/wine:/usr/nvidia/lib32:/usr/nvidia/lib32/vdpau:/usr/lib32:/usr/lib32/wine"
 export LIBRARY_PATH="/usr/nvidia/lib64:/usr/nvidia/lib64/vdpau:/usr/nvidia/lib64/xorg/modules/drivers:/usr/nvidia/lib64/xorg/modules/extensions:/usr/local/cuda/lib64:/usr/lib64/haswell:/usr/lib64/haswell/pulseaudio:/usr/lib64/haswell/alsa-lib:/usr/lib64/haswell/gstreamer-1.0:/usr/lib64/haswell/pipewire-0.3:/usr/lib64/haswell/spa-0.2:/usr/lib64/dri:/usr/lib64:/usr/lib64/pulseaudio:/usr/lib64/alsa-lib:/usr/lib64/gstreamer-1.0:/usr/lib64/pipewire-0.3:/usr/lib64/spa-0.2:/usr/lib:/aot/intel/oneapi/compiler/latest/linux/compiler/lib/intel64_lin:/aot/intel/oneapi/compiler/latest/linux/lib:/aot/intel/oneapi/mkl/latest/lib/intel64:/aot/intel/oneapi/tbb/latest/lib/intel64/gcc4.8:/usr/share:/usr/lib64/wine:/usr/nvidia/lib32:/usr/nvidia/lib32/vdpau:/usr/lib32:/usr/lib32/wine"
 ## profile_payload end
@@ -221,13 +276,13 @@ export FCFLAGS="${FCFLAGS_USE}"
 export LDFLAGS="${LDFLAGS_USE}"
 export ASMFLAGS="${ASMFLAGS_USE}"
 export LIBS="${LIBS_USE}"
-%cmake ..
+%cmake .. -DBUILD_TESTING:BOOL=OFF
 make  %{?_smp_mflags}    V=1 VERBOSE=1
 fi
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1639891445
+export SOURCE_DATE_EPOCH=1639896327
 rm -rf %{buildroot}
 pushd clr-build
 %make_install
@@ -235,3 +290,56 @@ popd
 
 %files
 %defattr(-,root,root,-)
+
+%files bin
+%defattr(-,root,root,-)
+/usr/bin/konsole
+/usr/bin/konsoleprofile
+
+%files data
+%defattr(-,root,root,-)
+/usr/share/applications/org.kde.konsole.desktop
+/usr/share/khotkeys/konsole.khotkeys
+/usr/share/knotifications5/konsole.notifyrc
+/usr/share/knsrcfiles/konsole.knsrc
+/usr/share/konsole/1x2-terminals.json
+/usr/share/konsole/2x1-terminals.json
+/usr/share/konsole/2x2-terminals.json
+/usr/share/konsole/BlackOnLightYellow.colorscheme
+/usr/share/konsole/BlackOnRandomLight.colorscheme
+/usr/share/konsole/BlackOnWhite.colorscheme
+/usr/share/konsole/BlueOnBlack.colorscheme
+/usr/share/konsole/Breeze.colorscheme
+/usr/share/konsole/DarkPastels.colorscheme
+/usr/share/konsole/GreenOnBlack.colorscheme
+/usr/share/konsole/Linux.colorscheme
+/usr/share/konsole/RedOnBlack.colorscheme
+/usr/share/konsole/Solarized.colorscheme
+/usr/share/konsole/SolarizedLight.colorscheme
+/usr/share/konsole/WhiteOnBlack.colorscheme
+/usr/share/konsole/default.keytab
+/usr/share/konsole/linux.keytab
+/usr/share/konsole/macos.keytab
+/usr/share/konsole/solaris.keytab
+/usr/share/kservices5/ServiceMenus/konsolerun.desktop
+/usr/share/kservices5/konsolepart.desktop
+/usr/share/kservicetypes5/terminalemulator.desktop
+/usr/share/metainfo/org.kde.konsole.appdata.xml
+/usr/share/qlogging-categories5/konsole.categories
+
+%files doc
+%defattr(0644,root,root,0755)
+/usr/share/doc/HTML/en/konsole/draganddrop-contextmenu.png
+/usr/share/doc/HTML/en/konsole/index.cache.bz2
+/usr/share/doc/HTML/en/konsole/index.docbook
+
+%files lib
+%defattr(-,root,root,-)
+/usr/lib64/libkonsoleapp.so.1
+/usr/lib64/libkonsoleapp.so.22.03.70
+/usr/lib64/qt5/plugins/konsolepart.so
+/usr/lib64/qt5/plugins/konsoleplugins/konsole_sshmanagerplugin.so
+
+%files staticdev
+%defattr(-,root,root,-)
+/usr/lib64/libkonsoleprivate.a
