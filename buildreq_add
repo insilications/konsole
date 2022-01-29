@@ -108,7 +108,7 @@ plasma-framework-dev
 python3-dev
 python3-staticdev
 qtbase-dev
-requests
+pypi-requests
 setxkbmap
 syntax-highlighting-dev
 util-linux

@@ -1,5 +1,5 @@
 PKG_NAME := konsole
-URL = https://invent.kde.org/utilities/konsole.git
+URL = /insilications/build/git-clr/konsole-clr/
 ARCHIVES = 
 ARCHIVES_GIT = 
 
