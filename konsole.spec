@@ -5,7 +5,7 @@
 %define keepstatic 1
 Name     : konsole
 Version  : 21.12.2
-Release  : 332
+Release  : 333
 URL      : file:///aot/build/clearlinux/packages/konsole/konsole-v21.12.2.tar.gz
 Source0  : file:///aot/build/clearlinux/packages/konsole/konsole-v21.12.2.tar.gz
 Summary  : No detailed summary available
@@ -195,7 +195,7 @@ unset https_proxy
 unset no_proxy
 export SSL_CERT_FILE=/var/cache/ca-certs/anchors/ca-certificates.crt
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1645272481
+export SOURCE_DATE_EPOCH=1645273155
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
@@ -283,6 +283,7 @@ export LDFLAGS="${LDFLAGS_GENERATE}"
 export ASMFLAGS="${ASMFLAGS_GENERATE}"
 export LIBS="${LIBS_GENERATE}"
  %cmake .. -DENABLE_PLUGIN_SSHMANAGER:BOOL=OFF \
+-DENABLE_PLUGIN_QUICKCOMMANDS:BOOL=ON \
 -DINSTALL_ICONS:BOOL=ON \
 -DBUILD_TESTING:BOOL=ON
 ## make_prepend64 content
@@ -343,7 +344,7 @@ export LIBRARY_PATH="/usr/local/nvidia/lib64:/usr/local/nvidia/lib64/gbm:/usr/lo
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1645272481
+export SOURCE_DATE_EPOCH=1645273155
 rm -rf %{buildroot}
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
