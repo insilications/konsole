@@ -5,12 +5,15 @@
 %define keepstatic 1
 Name     : konsole
 Version  : 21.12.2
-Release  : 335
+Release  : 336
 URL      : file:///aot/build/clearlinux/packages/konsole/konsole-v21.12.2.tar.gz
 Source0  : file:///aot/build/clearlinux/packages/konsole/konsole-v21.12.2.tar.gz
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : GPL-2.0 LGPL-2.0
+Requires: konsole-bin = %{version}-%{release}
+Requires: konsole-data = %{version}-%{release}
+Requires: konsole-lib = %{version}-%{release}
 BuildRequires : breeze
 BuildRequires : breeze-gtk
 BuildRequires : breeze-icons
@@ -59,7 +62,6 @@ BuildRequires : libICE-dev
 BuildRequires : libSM-dev
 BuildRequires : libX11-data
 BuildRequires : libX11-dev
-BuildRequires : libX11-dev libICE-dev libSM-dev libXau-dev libXcomposite-dev libXcursor-dev libXdamage-dev libXdmcp-dev libXext-dev libXfixes-dev libXft-dev libXi-dev libXinerama-dev libXi-dev libXmu-dev libXpm-dev libXrandr-dev libXrender-dev libXres-dev libXScrnSaver-dev libXt-dev libXtst-dev libXv-dev libXxf86vm-dev
 BuildRequires : libX11-lib
 BuildRequires : libXScrnSaver
 BuildRequires : libXScrnSaver-dev
@@ -121,7 +123,6 @@ BuildRequires : pypi-requests
 BuildRequires : python3-dev
 BuildRequires : python3-staticdev
 BuildRequires : qtbase-dev
-BuildRequires : qtbase-dev mesa-dev
 BuildRequires : setxkbmap
 BuildRequires : syntax-highlighting-dev
 BuildRequires : syntax-highlighting-staticdev
@@ -176,7 +177,6 @@ BuildRequires : xwd
 BuildRequires : xwininfo
 BuildRequires : xz
 BuildRequires : xz-dev
-BuildRequires : zlib-dev
 # Suppress stripping binaries
 %define __strip /bin/true
 %define debug_package %{nil}
@@ -184,6 +184,40 @@ BuildRequires : zlib-dev
 %description
 Use CheckXML to verify the file is valid XML
 Use meinproc5 to create an HTML version for local viewing.
+
+%package bin
+Summary: bin components for the konsole package.
+Group: Binaries
+Requires: konsole-data = %{version}-%{release}
+
+%description bin
+bin components for the konsole package.
+
+
+%package data
+Summary: data components for the konsole package.
+Group: Data
+
+%description data
+data components for the konsole package.
+
+
+%package doc
+Summary: doc components for the konsole package.
+Group: Documentation
+
+%description doc
+doc components for the konsole package.
+
+
+%package lib
+Summary: lib components for the konsole package.
+Group: Libraries
+Requires: konsole-data = %{version}-%{release}
+
+%description lib
+lib components for the konsole package.
+
 
 %prep
 %setup -q -n konsole-clr
@@ -195,7 +229,7 @@ unset https_proxy
 unset no_proxy
 export SSL_CERT_FILE=/var/cache/ca-certs/anchors/ca-certificates.crt
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1645273914
+export SOURCE_DATE_EPOCH=1645274310
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
@@ -274,18 +308,18 @@ export GTK_USE_PORTAL=1
 export DESKTOP_SESSION=plasma
 ## altflags_pgo end
 
-echo PGO Phase 1
-export CFLAGS="${CFLAGS_GENERATE}"
-export CXXFLAGS="${CXXFLAGS_GENERATE}"
-export FFLAGS="${FFLAGS_GENERATE}"
-export FCFLAGS="${FCFLAGS_GENERATE}"
-export LDFLAGS="${LDFLAGS_GENERATE}"
-export ASMFLAGS="${ASMFLAGS_GENERATE}"
-export LIBS="${LIBS_GENERATE}"
+echo PGO Phase 2
+export CFLAGS="${CFLAGS_USE}"
+export CXXFLAGS="${CXXFLAGS_USE}"
+export FFLAGS="${FFLAGS_USE}"
+export FCFLAGS="${FCFLAGS_USE}"
+export LDFLAGS="${LDFLAGS_USE}"
+export ASMFLAGS="${ASMFLAGS_USE}"
+export LIBS="${LIBS_USE}"
  %cmake .. -DENABLE_PLUGIN_SSHMANAGER:BOOL=ON \
 -DENABLE_PLUGIN_QUICKCOMMANDS:BOOL=ON \
 -DINSTALL_ICONS:BOOL=ON \
--DBUILD_TESTING:BOOL=ON
+-DBUILD_TESTING:BOOL=OFF
 ## make_prepend64 content
 mkdir -p /builddir/.config || :
 cp -af ../konsolerc /builddir/.config/konsolerc || :
@@ -294,57 +328,10 @@ cp -af ../default.profile /builddir/.local/share/konsole/default.profile || :
 cp -af ../Dracula.colorscheme /builddir/.local/share/konsole/Dracula.colorscheme || :
 ## make_prepend64 end
 make  %{?_smp_mflags}    V=1 VERBOSE=1
-## profile_payload start
-unset LD_LIBRARY_PATH
-unset LIBRARY_PATH
-export DISPLAY=:0
-export __GL_SYNC_TO_VBLANK=1
-export __GL_SYNC_DISPLAY_DEVICE=HDMI-0
-export VDPAU_NVIDIA_SYNC_DISPLAY_DEVICE=HDMI-0
-export LANG=en_US.UTF-8
-export XDG_CONFIG_DIRS=/usr/share/xdg:/etc/xdg
-export XDG_SEAT=seat0
-export XDG_SESSION_TYPE=tty
-export XDG_CURRENT_DESKTOP=KDE
-export XDG_SESSION_CLASS=user
-export XDG_VTNR=1
-export XDG_SESSION_ID=1
-export XDG_RUNTIME_DIR=/run/user/1000
-export XDG_DATA_DIRS=/usr/local/share:/usr/share
-export KDE_SESSION_VERSION=5
-export KDE_SESSION_UID=1000
-export KDE_FULL_SESSION=true
-export KDE_APPLICATIONS_AS_SCOPE=1
-export VDPAU_DRIVER=nvidia
-export LIBVA_DRIVER_NAME=vdpau
-export LIBVA_DRIVERS_PATH=/usr/lib64/dri
-export GTK_RC_FILES=/etc/gtk/gtkrc
-export FONTCONFIG_PATH="/usr/share/defaults/fonts"
-export GTK_IM_MODULE="xim"
-export QT_IM_MODULE="cedilla"
-export FREETYPE_PROPERTIES="truetype:interpreter-version=40"
-export NO_AT_BRIDGE=1
-export GTK_A11Y=none
-export PLASMA_USE_QT_SCALING=1
-export QT_AUTO_SCREEN_SCALE_FACTOR=0
-export QT_ENABLE_HIGHDPI_SCALING=0
-export QT_FONT_DPI=88
-export GTK_USE_PORTAL=1
-export DESKTOP_SESSION=plasma
-export LD_LIBRARY_PATH="/builddir/build/BUILD/konsole-clr/clr-build/bin:/usr/local/nvidia/lib64:/usr/local/nvidia/lib64/gbm:/usr/local/nvidia/lib64/vdpau:/usr/local/nvidia/lib64/xorg/modules/drivers:/usr/local/nvidia/lib64/xorg/modules/extensions:/usr/local/cuda/lib64:/usr/lib64/haswell:/usr/lib64/dri:/usr/lib64:/usr/lib:/aot/intel/oneapi/compiler/latest/linux/compiler/lib/intel64_lin:/aot/intel/oneapi/compiler/latest/linux/lib:/aot/intel/oneapi/mkl/latest/lib/intel64:/aot/intel/oneapi/tbb/latest/lib/intel64/gcc4.8:/usr/share:/usr/lib64/wine:/usr/local/nvidia/lib32:/usr/local/nvidia/lib32/vdpau:/usr/lib32:/usr/lib32/wine"
-export LIBRARY_PATH="/builddir/build/BUILD/konsole-clr/clr-build/bin:/usr/local/nvidia/lib64:/usr/local/nvidia/lib64/gbm:/usr/local/nvidia/lib64/vdpau:/usr/local/nvidia/lib64/xorg/modules/drivers:/usr/local/nvidia/lib64/xorg/modules/extensions:/usr/local/cuda/lib64:/usr/lib64/haswell:/usr/lib64/dri:/usr/lib64:/usr/lib:/aot/intel/oneapi/compiler/latest/linux/compiler/lib/intel64_lin:/aot/intel/oneapi/compiler/latest/linux/lib:/aot/intel/oneapi/mkl/latest/lib/intel64:/aot/intel/oneapi/tbb/latest/lib/intel64/gcc4.8:/usr/share:/usr/lib64/wine:/usr/local/nvidia/lib32:/usr/local/nvidia/lib32/vdpau:/usr/lib32:/usr/lib32/wine"
-ctest --parallel 1 --verbose --progress || :
-pushd bin/
-./TerminalInterfaceTest || :
-./DBusTest || :
-popd
-export LD_LIBRARY_PATH="/usr/local/nvidia/lib64:/usr/local/nvidia/lib64/gbm:/usr/local/nvidia/lib64/vdpau:/usr/local/nvidia/lib64/xorg/modules/drivers:/usr/local/nvidia/lib64/xorg/modules/extensions:/usr/local/cuda/lib64:/usr/lib64/haswell:/usr/lib64/dri:/usr/lib64:/usr/lib:/aot/intel/oneapi/compiler/latest/linux/compiler/lib/intel64_lin:/aot/intel/oneapi/compiler/latest/linux/lib:/aot/intel/oneapi/mkl/latest/lib/intel64:/aot/intel/oneapi/tbb/latest/lib/intel64/gcc4.8:/usr/share:/usr/lib64/wine:/usr/local/nvidia/lib32:/usr/local/nvidia/lib32/vdpau:/usr/lib32:/usr/lib32/wine"
-export LIBRARY_PATH="/usr/local/nvidia/lib64:/usr/local/nvidia/lib64/gbm:/usr/local/nvidia/lib64/vdpau:/usr/local/nvidia/lib64/xorg/modules/drivers:/usr/local/nvidia/lib64/xorg/modules/extensions:/usr/local/cuda/lib64:/usr/lib64/haswell:/usr/lib64/dri:/usr/lib64:/usr/lib:/aot/intel/oneapi/compiler/latest/linux/compiler/lib/intel64_lin:/aot/intel/oneapi/compiler/latest/linux/lib:/aot/intel/oneapi/mkl/latest/lib/intel64:/aot/intel/oneapi/tbb/latest/lib/intel64/gcc4.8:/usr/share:/usr/lib64/wine:/usr/local/nvidia/lib32:/usr/local/nvidia/lib32/vdpau:/usr/lib32:/usr/lib32/wine"
-## profile_payload end
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1645273914
+export SOURCE_DATE_EPOCH=1645274310
 rm -rf %{buildroot}
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
@@ -421,16 +408,71 @@ export QT_FONT_DPI=88
 export GTK_USE_PORTAL=1
 export DESKTOP_SESSION=plasma
 ## altflags_pgo end
-export CFLAGS="${CFLAGS_GENERATE}"
-export CXXFLAGS="${CXXFLAGS_GENERATE}"
-export FFLAGS="${FFLAGS_GENERATE}"
-export FCFLAGS="${FCFLAGS_GENERATE}"
-export LDFLAGS="${LDFLAGS_GENERATE}"
-export ASMFLAGS="${ASMFLAGS_GENERATE}"
-export LIBS="${LIBS_GENERATE}"
+export CFLAGS="${CFLAGS_USE}"
+export CXXFLAGS="${CXXFLAGS_USE}"
+export FFLAGS="${FFLAGS_USE}"
+export FCFLAGS="${FCFLAGS_USE}"
+export LDFLAGS="${LDFLAGS_USE}"
+export ASMFLAGS="${ASMFLAGS_USE}"
+export LIBS="${LIBS_USE}"
 pushd clr-build
 %make_install
 popd
 
 %files
 %defattr(-,root,root,-)
+
+%files bin
+%defattr(-,root,root,-)
+/usr/bin/konsole
+/usr/bin/konsoleprofile
+/usr/lib64/kconf_update_bin/konsole_globalaccel
+
+%files data
+%defattr(-,root,root,-)
+/usr/share/applications/org.kde.konsole.desktop
+/usr/share/icons/hicolor/128x128/apps/utilities-terminal.png
+/usr/share/icons/hicolor/16x16/apps/utilities-terminal.png
+/usr/share/icons/hicolor/22x22/apps/utilities-terminal.png
+/usr/share/icons/hicolor/32x32/apps/utilities-terminal.png
+/usr/share/icons/hicolor/48x48/apps/utilities-terminal.png
+/usr/share/icons/hicolor/64x64/apps/utilities-terminal.png
+/usr/share/kconf_update/konsole_globalaccel.upd
+/usr/share/kio/servicemenus/konsolerun.desktop
+/usr/share/knotifications5/konsole.notifyrc
+/usr/share/knsrcfiles/konsole.knsrc
+/usr/share/konsole/1x2-terminals.json
+/usr/share/konsole/2x1-terminals.json
+/usr/share/konsole/2x2-terminals.json
+/usr/share/konsole/BlackOnLightYellow.colorscheme
+/usr/share/konsole/BlackOnRandomLight.colorscheme
+/usr/share/konsole/BlackOnWhite.colorscheme
+/usr/share/konsole/BlueOnBlack.colorscheme
+/usr/share/konsole/Breeze.colorscheme
+/usr/share/konsole/DarkPastels.colorscheme
+/usr/share/konsole/GreenOnBlack.colorscheme
+/usr/share/konsole/Linux.colorscheme
+/usr/share/konsole/RedOnBlack.colorscheme
+/usr/share/konsole/Solarized.colorscheme
+/usr/share/konsole/SolarizedLight.colorscheme
+/usr/share/konsole/WhiteOnBlack.colorscheme
+/usr/share/konsole/default.keytab
+/usr/share/konsole/linux.keytab
+/usr/share/konsole/macos.keytab
+/usr/share/konsole/solaris.keytab
+/usr/share/kservices5/konsolepart.desktop
+/usr/share/kservicetypes5/terminalemulator.desktop
+/usr/share/metainfo/org.kde.konsole.appdata.xml
+/usr/share/qlogging-categories5/konsole.categories
+
+%files doc
+%defattr(0644,root,root,0755)
+/usr/share/doc/HTML/en/konsole/draganddrop-contextmenu.png
+/usr/share/doc/HTML/en/konsole/index.cache.bz2
+/usr/share/doc/HTML/en/konsole/index.docbook
+
+%files lib
+%defattr(-,root,root,-)
+/usr/lib64/qt5/plugins/konsolepart.so
+/usr/lib64/qt5/plugins/konsoleplugins/konsole_quickcommandsplugin.so
+/usr/lib64/qt5/plugins/konsoleplugins/konsole_sshmanagerplugin.so
