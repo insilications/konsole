@@ -5,7 +5,7 @@
 %define keepstatic 1
 Name     : konsole
 Version  : 21.12.2
-Release  : 333
+Release  : 334
 URL      : file:///aot/build/clearlinux/packages/konsole/konsole-v21.12.2.tar.gz
 Source0  : file:///aot/build/clearlinux/packages/konsole/konsole-v21.12.2.tar.gz
 Summary  : No detailed summary available
@@ -186,8 +186,8 @@ Use CheckXML to verify the file is valid XML
 Use meinproc5 to create an HTML version for local viewing.
 
 %prep
-%setup -q -n konsole-clr
-cd %{_builddir}/konsole-clr
+%setup -q -n konsole
+cd %{_builddir}/konsole
 
 %build
 unset http_proxy
@@ -195,7 +195,7 @@ unset https_proxy
 unset no_proxy
 export SSL_CERT_FILE=/var/cache/ca-certs/anchors/ca-certificates.crt
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1645273155
+export SOURCE_DATE_EPOCH=1645273599
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
@@ -282,7 +282,7 @@ export FCFLAGS="${FCFLAGS_GENERATE}"
 export LDFLAGS="${LDFLAGS_GENERATE}"
 export ASMFLAGS="${ASMFLAGS_GENERATE}"
 export LIBS="${LIBS_GENERATE}"
- %cmake .. -DENABLE_PLUGIN_SSHMANAGER:BOOL=OFF \
+ %cmake .. -DENABLE_PLUGIN_SSHMANAGER:BOOL=ON \
 -DENABLE_PLUGIN_QUICKCOMMANDS:BOOL=ON \
 -DINSTALL_ICONS:BOOL=ON \
 -DBUILD_TESTING:BOOL=ON
@@ -344,7 +344,7 @@ export LIBRARY_PATH="/usr/local/nvidia/lib64:/usr/local/nvidia/lib64/gbm:/usr/lo
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1645273155
+export SOURCE_DATE_EPOCH=1645273599
 rm -rf %{buildroot}
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
